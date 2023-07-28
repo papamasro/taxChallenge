@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4f5244e1-0155-4f37-8ffd-d8a108aef224" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/demo/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/HELP.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/demo.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/docker-compose.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/readme.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/DemoApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/config/CacheConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/config/WebClientConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/controller/CalculatorController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/controller/HistoryController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/dto/TaxesDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/exception/NoTaxValueException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/exception/WebClientException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/model/CalculateTaxRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/model/CalculateTaxResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/model/database/jpa/Taxes.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/model/database/redis/RedisTaxes.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/model/external/ChargesRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/model/external/ChargesResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/repository/HistoryRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/repository/TaxCacheRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/repository/TaxRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/script/databaseCreate.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/service/CalculatorService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/service/ExternalMockService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/service/HistoryService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/demo/service/inteface/ExternalService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/util/RateLimitConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/test/java/com/example/demo/DemoApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/test/java/com/example/demo/service/TaxServiceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/target/classes/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/target/classes/com/example/demo/DemoApplication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/target/classes/com/example/demo/config/CacheConfiguration.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/target/classes/com/example/demo/config/WebClientConfiguration.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/target/classes/com/example/demo/exception/NoTaxValueException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/target/classes/com/example/demo/exception/WebClientException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/target/classes/com/example/demo/model/CalculateTaxRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/target/classes/com/example/demo/model/CalculateTaxResponse.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/target/classes/com/example/demo/model/database/jpa/Taxes.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/target/classes/com/example/demo/model/database/redis/RedisTaxes.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/target/classes/com/example/demo/model/external/ChargesRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/target/classes/com/example/demo/model/external/ChargesResponse.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/target/classes/com/example/demo/repository/TaxCacheRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/target/classes/com/example/demo/repository/TaxRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/target/test-classes/com/example/demo/DemoApplicationTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/target/test-classes/com/example/demo/service/TaxServiceTest.class" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2SpHSILGRG5FBbOLQi8IXQydfmM" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_directory_selection": "C:/Users/mauro/Desktop/demo/src/test/java",
+    "last_opened_file_path": "C:/Users/mauro/Desktop/demo/ApiRest",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Facets",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "spring.configuration.checksum": "fe01ce2a7fbac8fafaed7c982a04e229",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ]
+  }
+}]]></component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.demo.repository" />
+      <recent name="com.example.demo.service" />
+      <recent name="com.example.demo.controller" />
+      <recent name="com.example.demo.model.database" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Database Script.databaseCreate.sql">
+    <configuration name="databaseCreate.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
+      <script-file value="$PROJECT_DIR$/src/main/java/com/example/demo/script/databaseCreate.sql" />
+      <script-mode>FILE</script-mode>
+      <method v="2" />
+    </configuration>
+    <configuration name="PercentageServiceTest.testGetPercentage" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="demo" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.demo.controller.external.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.demo.controller.external" />
+      <option name="MAIN_CLASS_NAME" value="com.example.demo.controller.external.PercentageServiceTest" />
+      <option name="METHOD_NAME" value="testGetPercentage" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Write tests for class CacheConfiguration" type="com.diffblue.cover.write-tests-run-configuration" factoryName="com.diffblue.cover.write-tests-run-configuration" activateToolWindowBeforeRun="false" temporary="true">
+      <module name="demo" />
+      <settings run-config-name="Write tests for class CacheConfiguration" include-system-env-vars="true">
+        <jvm-args />
+        <selection-scope>class</selection-scope>
+        <selected-element key="com.example.demo.config.CacheConfiguration" />
+      </settings>
+      <method v="2" />
+    </configuration>
+    <configuration name="Write tests for class ExternalMockService" type="com.diffblue.cover.write-tests-run-configuration" factoryName="com.diffblue.cover.write-tests-run-configuration" activateToolWindowBeforeRun="false" temporary="true">
+      <module name="demo" />
+      <settings run-config-name="Write tests for class ExternalMockService" include-system-env-vars="true">
+        <jvm-args />
+        <selection-scope>class</selection-scope>
+        <selected-element key="com.example.demo.service.ExternalMockService" />
+      </settings>
+      <method v="2" />
+    </configuration>
+    <configuration name="Write tests for method TaxService.calculateTax" type="com.diffblue.cover.write-tests-run-configuration" factoryName="com.diffblue.cover.write-tests-run-configuration" activateToolWindowBeforeRun="false" temporary="true">
+      <module name="demo" />
+      <settings run-config-name="Write tests for method TaxService.calculateTax" include-system-env-vars="true">
+        <jvm-args />
+        <selection-scope>method</selection-scope>
+        <selected-element key="com.example.demo.service.TaxService.calculateTax:(Lcom/example/demo/model/external/ChargesRequest;)Ljava/lang/Double;" />
+      </settings>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.PercentageServiceTest.testGetPercentage" />
+        <item itemvalue="Diffblue Cover.Write tests for class CacheConfiguration" />
+        <item itemvalue="Diffblue Cover.Write tests for class ExternalMockService" />
+        <item itemvalue="Diffblue Cover.Write tests for method TaxService.calculateTax" />
+        <item itemvalue="Database Script.databaseCreate.sql" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4f5244e1-0155-4f37-8ffd-d8a108aef224" name="Changes" comment="" />
+      <created>1689836601550</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1689836601550</updated>
+      <workItem from="1689836602573" duration="612000" />
+      <workItem from="1689880851135" duration="9452000" />
+      <workItem from="1689962771094" duration="850000" />
+      <workItem from="1690061299496" duration="4486000" />
+      <workItem from="1690080119678" duration="338000" />
+      <workItem from="1690080471081" duration="31350000" />
+      <workItem from="1690228467836" duration="1867000" />
+      <workItem from="1690230835868" duration="14133000" />
+      <workItem from="1690257345635" duration="66134000" />
+      <workItem from="1690515556388" duration="54000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/demo/service/CalculatorService.java</url>
+          <line>28</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/demo/service/CalculatorService.java</url>
+          <line>27</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/demo/config/WebClientConfiguration.java</url>
+          <line>43</line>
+          <properties>
+            <option name="lambda-ordinal" value="1" />
+          </properties>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/demo/config/WebClientConfiguration.java</url>
+          <line>35</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/demo/service/CalculatorService.java</url>
+          <line>46</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/demo/service/CalculatorService.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/demo/service/CalculatorService.java</url>
+          <line>45</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/demo/service/external/ExternalMockService.java</url>
+          <line>15</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/demo/controller/CalculatorController.java</url>
+          <line>25</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/demo/controller/CalculatorController.java</url>
+          <line>27</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/demo/controller/CalculatorController.java</url>
+          <line>26</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/demo/thread/SaveTransaction.java</url>
+          <line>37</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/demo/thread/SaveTransaction.java</url>
+          <line>36</line>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/demo/service/HistoryService.java</url>
+          <line>46</line>
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/demo/service/HistoryService.java</url>
+          <line>44</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/demo/service/HistoryService.java</url>
+          <line>43</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
