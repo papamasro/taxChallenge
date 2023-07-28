@@ -3,6 +3,7 @@ package com.example.demo.config;
 import io.netty.channel.ChannelOption;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.TimeoutException;
+import io.netty.handler.timeout.WriteTimeoutHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,7 @@ import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
+import reactor.netty.tcp.TcpClient;
 import reactor.util.retry.Retry;
 
 import java.time.Duration;
@@ -29,9 +31,17 @@ public class WebClientConfiguration {
 
     }
 
-    @Bean("service-a-web-client")
-    public WebClient serviceAWebClient() {
+    // tcp client timeout
+    TcpClient tcpClient = TcpClient.create()
+            .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 3000)
+            .doOnConnected(connection ->
+                    connection.addHandlerLast(new ReadTimeoutHandler(3))
+                            .addHandlerLast(new WriteTimeoutHandler(3)));
+
+    @Bean//("service-a-web-client")
+    public WebClient webClientBuilder() {
         return WebClient.builder()
+
                 .clientConnector(new ReactorClientHttpConnector(getHttpClientWithTimeout(timeout)))
                 .filter(buildRetryExchangeFilterFunction())
                 .build();

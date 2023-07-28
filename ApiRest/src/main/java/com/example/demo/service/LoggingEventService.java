@@ -12,11 +12,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.concurrent.CompletableFuture;
 
 @Service
-public class HistoryService {
+public class LoggingEventService {
 
     @Autowired
     private HistoryPagRepository callHistoryPagRepository;
@@ -36,7 +35,13 @@ public class HistoryService {
             callHistory.setResponse(response);
             historyRepository.save(callHistory);
             return 200;
+        }).thenApply(s -> {
+
+            //LOG
+            return s;
         });
+
+
     }
 
     public Page<CallHistory> getCallHistory(int page, int size) {

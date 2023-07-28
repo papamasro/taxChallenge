@@ -2,10 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.CalculateTaxRequest;
 import com.example.demo.model.CalculateTaxResponse;
-import com.example.demo.model.external.ChargesRequest;
-import com.example.demo.model.external.ChargesResponse;
 import com.example.demo.service.CalculatorService;
-import com.google.gson.Gson;
 import jakarta.annotation.Nonnull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +20,8 @@ CalculatorService calculatorService;
     @ResponseBody
     public ResponseEntity<CalculateTaxResponse> calculateTax(@RequestBody @Nonnull CalculateTaxRequest calculateTaxRequest)
     {
-        ChargesRequest chargeRequest = new ChargesRequest(calculateTaxRequest.getFirst(),calculateTaxRequest.getSecond());
-        ChargesResponse calculated = calculatorService.calculateTax(chargeRequest);
-        CalculateTaxResponse taxResponse = new CalculateTaxResponse(calculated.getDate(), calculated.getTax(), 1.0); //ARREGLAR
+        CalculateTaxResponse calculated = calculatorService.calculateTax(calculateTaxRequest);
+        CalculateTaxResponse taxResponse = new CalculateTaxResponse(calculated.getDate(), calculated.getTax(), 1.0); //TODO ARREGLAR
         return ResponseEntity.ok(taxResponse);
     }
 
