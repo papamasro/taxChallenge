@@ -19,10 +19,6 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import javax.cache.CacheManager;
 import javax.cache.Caching;
 import java.time.Duration;
-
-
-
-
     @Configuration
     public class CacheConfiguration {
 

@@ -13,13 +13,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/")
 public class CalculatorController {
 
-@Autowired
-CalculatorService calculatorService;
+    @Autowired
+    CalculatorService calculatorService;
 
     @PostMapping("calculateTax")
     @ResponseBody
-    public ResponseEntity<CalculateTaxResponse> calculateTax(@RequestBody @Nonnull CalculateTaxRequest calculateTaxRequest)
-    {
+    public ResponseEntity<CalculateTaxResponse> calculateTax(@RequestBody @Nonnull CalculateTaxRequest calculateTaxRequest) {
         CalculateTaxResponse calculated = calculatorService.calculateTax(calculateTaxRequest);
         CalculateTaxResponse taxResponse = new CalculateTaxResponse(calculated.getDate(), calculated.getTax(), 1.0); //TODO ARREGLAR
         return ResponseEntity.ok(taxResponse);

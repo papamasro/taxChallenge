@@ -5,12 +5,10 @@ import com.example.demo.model.CalculateTaxRequest;
 import com.example.demo.model.CalculateTaxResponse;
 import com.example.demo.model.external.ChargeRequest;
 import com.example.demo.model.external.ChargeResponse;
-import com.example.demo.repository.TaxRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
-import util.DateFormatter;
+import com.example.demo.util.DateFormatter;
 
 @Service
 public class CalculatorService {
@@ -19,7 +17,7 @@ public class CalculatorService {
     LoggingEventService loggingEventService;
 
     @Autowired
-    TaxRespository taxRepository;
+    TaxService taxRepository;
 
 
     @Cacheable(value = "taxes")

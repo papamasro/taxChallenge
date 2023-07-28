@@ -3,7 +3,7 @@ package com.example.demo.config;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import util.RateLimitFilter;
+import com.example.demo.util.RateLimitFilter;
 
 @Configuration
 public class RateLimitFilterConfiguration {
