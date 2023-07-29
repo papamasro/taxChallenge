@@ -22,10 +22,8 @@ import java.time.Duration;
 
 
 @Service
-public class TaxService { //TODO MOVE WEBCLIENT LOGIC TO WEBCLIENT CONFIGURATION CLASS
-
+public class TaxService { //TODO MOVE WEBCLIENT LOGIC TO WEBCLIENT CONFIGURATION CLASS IF WILL REUSED
     private static final Logger logger = LoggerFactory.getLogger(TaxService.class);
-
 
     @Value("${webclient.timeout}")
     private int timeout;
@@ -36,7 +34,6 @@ public class TaxService { //TODO MOVE WEBCLIENT LOGIC TO WEBCLIENT CONFIGURATION
     }
 
     public TaxValueResponse getTaxes(TaxValueRequest request) {
-
         logger.info("Creating webclient for call taxes service");
         WebClient client = WebClient.builder()
                 .baseUrl("https://www.mockachino.com/428acb5c-9f6a-45")

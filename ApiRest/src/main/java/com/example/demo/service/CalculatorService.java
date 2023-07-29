@@ -38,27 +38,19 @@ public class CalculatorService {
         try {
             TaxValueRequest requestCharge = new TaxValueRequest("taxesName"); //Service need a name?
             TaxValueResponse responseCharge = taxRepository.getTaxes(requestCharge);
-            CompletableFuture.supplyAsync(() -> { //TODO REVISAR SI ESTA BIEN IMPLEMENTADO
+            CompletableFuture.runAsync(() -> {
                 loggingEventService.saveCallHistory("getTax", 200, gson.toJson(responseCharge));
-                return 200;
-            }).thenApply(s -> {
-                logger.info("success saving history call on BD");
-                return s;
+                logger.info("success saving history call on BD on other thread");
             });
             logger.info("saving taxes in cache");
     //        savePercentageFromCache(responseCharge.getTax()); //TODO NO SAVING
             return responseCharge.getTax();
         } catch (Exception ex) {
             logger.error("error getting taxes from service");
-
-            CompletableFuture.supplyAsync(() -> { //TODO REVISAR SI ESTA BIEN IMPLEMENTADO
+            CompletableFuture.runAsync(() -> {
                 loggingEventService.saveCallHistory("getTax", ex.hashCode(), ex.getMessage().toString());
-                return 200;
-            }).thenApply(s -> {
-                logger.info("success saving history call on BD");
-                return s;
+                logger.info("failed tax service, but success saving history call on BD");
             });
-
             logger.info("getting taxes from cache");
             Optional<Double> percentageFromCache = this.getPercentageFromCache();
             if(percentageFromCache.isPresent()) {
@@ -77,12 +69,9 @@ public class CalculatorService {
         Double resultWithCharges = resultAddNumbers + charges;
         String date = new DateFormatter().getStringDate();
         CalculateTaxResponse response = new CalculateTaxResponse(date, tax, resultWithCharges);
-        CompletableFuture.supplyAsync(() -> { //TODO REVISAR SI ESTA BIEN IMPLEMENTADO
+        CompletableFuture.runAsync(() -> {
             loggingEventService.saveCallHistory("calculateTax", 200, gson.toJson(response));
-            return 200;
-        }).thenApply(s -> {
             logger.info("success saving history call on BD");
-            return s;
         });
         return response;
     }
