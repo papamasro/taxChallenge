@@ -3,8 +3,8 @@ package com.example.demo.service;
 import com.example.demo.exception.NoTaxValueException;
 import com.example.demo.model.CalculateTaxRequest;
 import com.example.demo.model.CalculateTaxResponse;
-import com.example.demo.model.external.ChargeRequest;
-import com.example.demo.model.external.ChargeResponse;
+import com.example.demo.model.external.TaxValueRequest;
+import com.example.demo.model.external.TaxValueResponse;
 import com.example.demo.service.api.LoggingEventService;
 import com.example.demo.service.api.PercentageCacheService;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,8 +41,8 @@ public class CalculatorServiceTest {
     @Test
     public void testGetTaxes_SuccessfulResponse() {
         // Arrange
-        ChargeRequest request = new ChargeRequest("taxesName");
-        ChargeResponse response = new ChargeResponse("123456",0.1);
+        TaxValueRequest request = new TaxValueRequest("taxesName");
+        TaxValueResponse response = new TaxValueResponse("123456",0.1);
         when(taxRepository.getTaxes(request)).thenReturn(response);
 
         // Act
@@ -56,7 +56,7 @@ public class CalculatorServiceTest {
     @Test
     public void testGetTaxes_ExceptionThrownFromRepository() {
         // Arrange
-        ChargeRequest request = new ChargeRequest("taxesName");
+        TaxValueRequest request = new TaxValueRequest("taxesName");
         when(taxRepository.getTaxes(request)).thenThrow(new RuntimeException("Test exception"));
 
         // Act and Assert

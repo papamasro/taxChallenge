@@ -2,7 +2,7 @@ package com.example.demo.model.external;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class ChargeResponse {
+public class TaxValueResponse {
 
     @JsonProperty
     private String timestamp;
@@ -10,10 +10,10 @@ public class ChargeResponse {
     private Double tax;
 
 
-    public ChargeResponse() {
+    public TaxValueResponse() {
     }
 
-    public ChargeResponse(String timestamp, Double tax) {
+    public TaxValueResponse(String timestamp, Double tax) {
         this.timestamp = timestamp;
         this.tax = tax;
     }

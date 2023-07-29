@@ -2,8 +2,8 @@ package com.example.demo.service;
 
 import com.example.demo.exception.NoTaxService400Exception;
 import com.example.demo.exception.NoTaxServiceException;
-import com.example.demo.model.external.ChargeRequest;
-import com.example.demo.model.external.ChargeResponse;
+import com.example.demo.model.external.TaxValueRequest;
+import com.example.demo.model.external.TaxValueResponse;
 import io.netty.handler.timeout.TimeoutException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +35,7 @@ public class TaxService { //TODO MOVE WEBCLIENT LOGIC TO WEBCLIENT CONFIGURATION
 
     }
 
-    public ChargeResponse getTaxes(ChargeRequest request) {
+    public TaxValueResponse getTaxes(TaxValueRequest request) {
 
         logger.info("Creating webclient for call taxes service");
         WebClient client = WebClient.builder()
@@ -49,7 +49,7 @@ public class TaxService { //TODO MOVE WEBCLIENT LOGIC TO WEBCLIENT CONFIGURATION
         return client.get()
                 .uri("/getTax")
                 .retrieve()
-                .bodyToMono(ChargeResponse.class)
+                .bodyToMono(TaxValueResponse.class)
                 .retryWhen(Retry.backoff(3, Duration.ofSeconds(2)).jitter(0.75)
                         .filter(throwable -> throwable instanceof TimeoutException)).block();
 

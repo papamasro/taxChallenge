@@ -29,8 +29,6 @@ public class LoggingEventService {
     private HistoryRepository historyRepository; //TODO ESTA BIEN ESTE DOBLE REPO?
 
     public void saveCallHistory(String endpoint, int statusCode, String response) {
-         CompletableFuture.supplyAsync(() -> {
-
             CallHistory callHistory = new CallHistory();
             callHistory.setTimestamp(new DateFormatter().getStringDate());
             callHistory.setEndpoint(endpoint);
@@ -38,12 +36,6 @@ public class LoggingEventService {
             callHistory.setResponse(response);
             logger.info("saving history call on BD");
             historyRepository.save(callHistory);
-            return 200;
-        }).thenApply(s -> {
-            logger.info("success saving history call on BD");
-            return s;
-        });
-
 
     }
 

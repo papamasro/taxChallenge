@@ -1,12 +1,12 @@
 package com.example.demo.model.external;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ChargeRequest {
+public class TaxValueRequest {
 
         @JsonProperty
         private String taxesName;
 
-        public ChargeRequest(String taxesName) {
+        public TaxValueRequest(String taxesName) {
                 this.taxesName = taxesName;
         }
 
