@@ -12,6 +12,14 @@ public class CalculateTaxRequest {
     @JsonProperty @Nonnull
     private Double second;
 
+    public CalculateTaxRequest(@Nonnull Double first, @Nonnull Double second) {
+        this.first = first;
+        this.second = second;
+    }
+
+    public CalculateTaxRequest() {
+    }
+
     public Double getFirst() {
         return first;
     }

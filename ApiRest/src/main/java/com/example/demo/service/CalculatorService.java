@@ -10,7 +10,6 @@ import com.example.demo.service.api.PercentageCacheService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import com.example.demo.util.DateFormatter;
 
@@ -30,12 +29,14 @@ public class CalculatorService {
     @Autowired
     PercentageCacheService percentageCacheService;
 
-    @Cacheable(value = "taxes")
+    //@Cacheable(value = "taxes")
     public Double getTaxes() {
         try {
             ChargeRequest requestCharge = new ChargeRequest("taxesName"); //Service need a name?
             ChargeResponse responseCharge = taxRepository.getTaxes(requestCharge);
             loggingEventService.saveCallHistory("getTax", 200, responseCharge.getTax().toString());
+            logger.info("saving taxes in cache");
+    //        savePercentageFromCache(responseCharge.getTax());
             return responseCharge.getTax();
         } catch (Exception ex) {
             logger.error("error getting taxes from service");
@@ -56,14 +57,18 @@ public class CalculatorService {
         Double resultAddNumbers = chargesRequest.getFirst() + chargesRequest.getSecond();
         Double charges = (resultAddNumbers * tax);
         Double resultWithCharges = resultAddNumbers + charges;
-        String date = new DateFormatter().getDate();
+        String date = new DateFormatter().getStringDate();
         CalculateTaxResponse response = new CalculateTaxResponse(date, tax, resultWithCharges);
         loggingEventService.saveCallHistory("calculateTax", 200, response.toString());
         return response;
     }
 
-    private Optional<Double> getPercentageFromCache() {
+    Optional<Double> getPercentageFromCache() {
         return this.percentageCacheService.getPercentage();
+    }
+
+    void savePercentageFromCache(Double taxes) {
+        this.percentageCacheService.savePercentage(taxes);
     }
 
 }

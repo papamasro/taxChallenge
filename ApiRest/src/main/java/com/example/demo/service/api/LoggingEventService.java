@@ -5,6 +5,7 @@ import com.example.demo.model.jpa.CallHistory;
 import com.example.demo.repository.HistoryPagRepository;
 import com.example.demo.repository.HistoryRepository;
 import com.example.demo.service.TaxService;
+import com.example.demo.util.DateFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -30,10 +30,9 @@ public class LoggingEventService {
 
     public void saveCallHistory(String endpoint, int statusCode, String response) {
          CompletableFuture.supplyAsync(() -> {
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            Long time = timestamp.getTime();
+
             CallHistory callHistory = new CallHistory();
-            callHistory.setTimestamp(time.toString());
+            callHistory.setTimestamp(new DateFormatter().getStringDate());
             callHistory.setEndpoint(endpoint);
             callHistory.setStatusCode(statusCode);
             callHistory.setResponse(response);

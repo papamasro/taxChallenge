@@ -13,7 +13,9 @@ spring
 postgresql
 
 
-
+the redis is not configure for scaling, the rate limiter will not work property
+possible solution not implemented because no time
+https://www.nexsoftsys.com/articles/distributed-caching-in-java-microservices-using-redis-cluster.html
 
 run local postgres
 
