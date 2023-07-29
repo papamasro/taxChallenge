@@ -31,13 +31,6 @@ public class WebClientConfiguration {
 
     }
 
-    // tcp client timeout
-    TcpClient tcpClient = TcpClient.create()
-            .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 3000)
-            .doOnConnected(connection ->
-                    connection.addHandlerLast(new ReadTimeoutHandler(3))
-                            .addHandlerLast(new WriteTimeoutHandler(3)));
-
     @Bean//("service-a-web-client")
     public WebClient webClientBuilder() {
         return WebClient.builder()
