@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
-import com.example.demo.model.external.TaxValueRequest;
-import com.example.demo.model.external.TaxValueResponse;
+import com.example.demo.model.services.calculate.TaxValueRequest;
+import com.example.demo.model.external.TaxesServiceResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -44,7 +44,7 @@ class TaxServiceTest {
     public void testGetTaxes_SuccessfulResponse() {
         // Arrange
         TaxValueRequest request = new TaxValueRequest("1");
-        TaxValueResponse expectedResponse = new TaxValueResponse("1234567", 12.0);
+        TaxesServiceResponse expectedResponse = new TaxesServiceResponse("1234567", 12.0);
 
         when(webClientBuilder.baseUrl(anyString())).thenReturn(webClientBuilder);
         when(webClientBuilder.defaultHeader(anyString(), anyString())).thenReturn(webClientBuilder);
@@ -55,10 +55,10 @@ class TaxServiceTest {
         when(webClientBuilder.build().get()).thenReturn(requestHeadersUriSpec);
         when(requestHeadersUriSpec.uri(anyString())).thenReturn(requestHeadersSpec);
         when(requestHeadersSpec.retrieve()).thenReturn(responseSpec);
-        when(responseSpec.bodyToMono(TaxValueResponse.class)).thenReturn(Mono.just(expectedResponse));
+        when(responseSpec.bodyToMono(TaxesServiceResponse.class)).thenReturn(Mono.just(expectedResponse));
 
         // Act
-        TaxValueResponse actualResponse = taxService.getTaxes(request);
+        TaxesServiceResponse actualResponse = taxService.getTaxes(request);
 
         // Assert
         assertNotNull(actualResponse);
@@ -79,7 +79,7 @@ class TaxServiceTest {
         when(webClientBuilder.build().get()).thenReturn(requestHeadersUriSpec);
         when(requestHeadersUriSpec.uri(anyString())).thenReturn(requestHeadersSpec);
         when(requestHeadersSpec.retrieve()).thenReturn(responseSpec);
-        when(responseSpec.bodyToMono(TaxValueResponse.class)).thenReturn(Mono.error(new TimeoutException()));
+        when(responseSpec.bodyToMono(TaxesServiceResponse.class)).thenReturn(Mono.error(new TimeoutException()));
 
         // Act and Assert
         assertThrows(TimeoutException.class, () -> taxService.getTaxes(request));

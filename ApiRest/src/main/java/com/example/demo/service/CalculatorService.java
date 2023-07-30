@@ -1,10 +1,10 @@
 package com.example.demo.service;
 
 import com.example.demo.exception.NoTaxValueException;
-import com.example.demo.model.CalculateTaxResponse;
-import com.example.demo.model.external.TaxValueRequest;
-import com.example.demo.model.external.TaxValueResponse;
+import com.example.demo.model.services.calculate.CalculateTaxResponse;
+import com.example.demo.model.services.calculate.TaxValueRequest;
 import com.example.demo.model.external.TaxesServiceRequest;
+import com.example.demo.model.external.TaxesServiceResponse;
 import com.example.demo.model.jpa.TaxesCache;
 import com.example.demo.service.api.LoggingEventService;
 import com.example.demo.service.api.TaxesCacheService;
@@ -37,11 +37,11 @@ public class CalculatorService {
     public Double getExternalTaxes(String name) {
         try {
             TaxesServiceRequest taxesServiceRequest = new TaxesServiceRequest(name);
-            TaxValueResponse responseCharge = taxRepository.getTaxes(taxesServiceRequest); //call external service
+            TaxesServiceResponse responseCharge = taxRepository.getTaxes(taxesServiceRequest); //call external service
 
             CompletableFuture.runAsync(() -> {
                 loggingEventService.saveCallHistory("getExternalTax", 200, gson.toJson(responseCharge));
-                logger.info("success saving history call on BD on other thread");
+                logger.info("success saving history call on BD");
             });
 
             logger.info("saving taxes in cache");
@@ -54,7 +54,7 @@ public class CalculatorService {
             logger.error("error getting taxes from service");
             CompletableFuture.runAsync(() -> {
                 loggingEventService.saveCallHistory("getExternalTax", 404, ex.getMessage()); //TODO RESOLVE STATUS CODE
-                logger.info("failed tax service, but success saving history call on BD");
+                logger.info("success saving history call on BD");
             });
 
             logger.info("trying to get taxes from cache");
@@ -72,16 +72,13 @@ public class CalculatorService {
     public CalculateTaxResponse calculateTax(TaxValueRequest chargesRequest) {
 
         Double externalTaxes = getExternalTaxes(chargesRequest.getTaxesName());
-
         Double resultAddNumbers = chargesRequest.getFirstNumber() + chargesRequest.getSecondNumber();
         Double charges = (resultAddNumbers * externalTaxes);
         Double resultWithCharges = resultAddNumbers + charges;
-        String date = new DateFormatter().getStringDate();
-        CalculateTaxResponse response = new CalculateTaxResponse(date, externalTaxes, resultWithCharges);
         CompletableFuture.runAsync(() -> {
-            loggingEventService.saveCallHistory("calculateTax", 200, gson.toJson(response));
+            loggingEventService.saveCallHistory("calculateTax", 200, resultWithCharges.toString());
             logger.info("success saving history call on BD");
         });
-        return response;
+        return new CalculateTaxResponse(DateFormatter.getStringDate(), externalTaxes, resultWithCharges);
     }
 }

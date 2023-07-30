@@ -1,33 +1,31 @@
 package com.example.demo.model.jpa;
 
-import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 
 
 @Entity
-//@RedisHash(value = "tax")
-@Table(name="call_history")
-public class CallHistory { //implements Serializable {
+@Table(name = "call_history")
+public class CallHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name="endpoint")
+    @Column(name = "endpoint")
     private String endpoint;
 
-    @Column(name="timestamp")
+    @Column(name = "timestamp")
     private String timestamp;
 
-    @Column(name="status_code")
+    @Column(name = "status_code")
     private Integer statusCode;
 
-    @Column(name="response")
+    @Column(name = "response")
     private String response;
 
     public CallHistory() {
     }
 
-    public CallHistory(Long id, String endpoint, String taxPercent, String timestamp, Integer statusCode, String response) {
+    public CallHistory(Long id, String endpoint, String timestamp, Integer statusCode, String response) {
         this.id = id;
         this.endpoint = endpoint;
         this.timestamp = timestamp;

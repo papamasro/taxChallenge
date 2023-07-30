@@ -1,18 +1,23 @@
-package com.example.demo.model;
+package com.example.demo.model.services.calculate;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.annotation.Nonnull;
+import jakarta.validation.constraints.NotEmpty;
 
 
 public class CalculateTaxRequest {
 
-    @JsonProperty @Nonnull
+    @JsonProperty
+    @Nonnull
+    @NotEmpty
     private Double first;
 
-    @JsonProperty @Nonnull
+    @JsonProperty
+    @Nonnull
+    @NotEmpty
     private Double second;
 
-    public CalculateTaxRequest(@Nonnull Double first, @Nonnull Double second) {
+    public CalculateTaxRequest(Double first, Double second) {
         this.first = first;
         this.second = second;
     }

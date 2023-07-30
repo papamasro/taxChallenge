@@ -1,10 +1,10 @@
 package com.example.demo.service;
 
 import com.example.demo.exception.NoTaxValueException;
-import com.example.demo.model.CalculateTaxRequest;
-import com.example.demo.model.CalculateTaxResponse;
-import com.example.demo.model.external.TaxValueRequest;
-import com.example.demo.model.external.TaxValueResponse;
+import com.example.demo.model.services.calculate.CalculateTaxRequest;
+import com.example.demo.model.services.calculate.CalculateTaxResponse;
+import com.example.demo.model.services.calculate.TaxValueRequest;
+import com.example.demo.model.external.TaxesServiceResponse;
 import com.example.demo.service.api.LoggingEventService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,7 +41,7 @@ public class CalculatorServiceTest {
     public void testGetTaxes_SuccessfulResponse() {
         // Arrange
         TaxValueRequest request = new TaxValueRequest("taxesName");
-        TaxValueResponse response = new TaxValueResponse("123456","iigg",0.1);
+        TaxesServiceResponse response = new TaxesServiceResponse("123456","iigg",0.1);
         when(taxRepository.getTaxes(request)).thenReturn(response);
 
         // Act

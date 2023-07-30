@@ -1,10 +1,10 @@
 package com.example.demo.dto;
 
 public class HistoryDTO {
-        private String timestamp;
-        private String endpoint;
-        private Integer statusCode;
-        private String response;
+    private String timestamp;
+    private String endpoint;
+    private Integer statusCode;
+    private String response;
 
     public HistoryDTO() {
     }

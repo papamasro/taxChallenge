@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface HistoryPagRepository extends PagingAndSortingRepository<CallHistory, Long> {
 
-  //  List<Taxes> findAllByTimestamp(String timestamp, Pageable pageable);
+    //  List<Taxes> findAllByTimestamp(String timestamp, Pageable pageable);
 
 }

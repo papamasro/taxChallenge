@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.CalculateTaxRequest;
-import com.example.demo.model.CalculateTaxResponse;
-import com.example.demo.model.external.TaxValueRequest;
+import com.example.demo.model.services.calculate.CalculateTaxRequest;
+import com.example.demo.model.services.calculate.CalculateTaxResponse;
+import com.example.demo.model.services.calculate.TaxValueRequest;
 import com.example.demo.service.CalculatorService;
 import jakarta.annotation.Nonnull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +20,8 @@ public class CalculatorController {
     @PostMapping("calculateTax")
     @ResponseBody
     public ResponseEntity<CalculateTaxResponse> calculateTax(@RequestBody @Nonnull CalculateTaxRequest calculateTaxRequest) {
-        TaxValueRequest taxValueRequest = new TaxValueRequest("IIGG",calculateTaxRequest.getFirst(),calculateTaxRequest.getSecond()); //SERVICE WILL NEED A TAX NAME?
+        TaxValueRequest taxValueRequest = new TaxValueRequest("IIGG", calculateTaxRequest.getFirst(), calculateTaxRequest.getSecond()); //EXTERNAL SERVICE WILL NEED A TAX NAME?
         CalculateTaxResponse calculated = calculatorService.calculateTax(taxValueRequest);
-
-        //MAP RESPONSE
         return ResponseEntity.ok(calculated);
     }
 

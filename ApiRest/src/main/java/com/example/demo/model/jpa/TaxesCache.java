@@ -16,7 +16,6 @@ public class TaxesCache implements Serializable {
     private Integer id;
     @Indexed
     private String name;
-    @Indexed
     private String timestamp;
     private Double value;
 

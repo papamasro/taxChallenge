@@ -1,9 +1,9 @@
 package com.example.demo.service;
 
 import com.example.demo.exception.NoTaxService400Exception;
-import com.example.demo.exception.NoTaxServiceException;
-import com.example.demo.model.external.TaxValueResponse;
+import com.example.demo.exception.NoTaxService500Exception;
 import com.example.demo.model.external.TaxesServiceRequest;
+import com.example.demo.model.external.TaxesServiceResponse;
 import io.netty.handler.timeout.TimeoutException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +22,7 @@ import java.time.Duration;
 
 
 @Service
-public class TaxService { //TODO MOVE WEBCLIENT LOGIC TO WEBCLIENT CONFIGURATION CLASS IF WILL REUSED
+public class TaxService { //TODO MOVE WEBCLIENT LOGIC TO WEBCLIENT CONFIGURATION CLASS IF WILL BE REUSED
     private static final Logger logger = LoggerFactory.getLogger(TaxService.class);
 
     @Value("${webclient.timeout}")
@@ -33,8 +33,8 @@ public class TaxService { //TODO MOVE WEBCLIENT LOGIC TO WEBCLIENT CONFIGURATION
 
     }
 
-    public TaxValueResponse getTaxes(TaxesServiceRequest request) {
-        logger.info("Creating webclient for call taxes service");
+    public TaxesServiceResponse getTaxes(TaxesServiceRequest request) {
+        logger.info("Creating webclient for call external taxes service");
         WebClient client = WebClient.builder()
                 .baseUrl("https://www.mockachino.com/428acb5c-9f6a-45")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
@@ -42,13 +42,13 @@ public class TaxService { //TODO MOVE WEBCLIENT LOGIC TO WEBCLIENT CONFIGURATION
                 .clientConnector(new ReactorClientHttpConnector(getHttpClientWithTimeout(timeout)))
                 //    .defaultUriVariables(Collections.singletonMap("url", "http://localhost:8080"))
                 .build();
-
+        //TODO CALL URL BUILDER TO SIMULATE ERROR
         return client.get()
-                .uri("/getTax")
+                .uri("/getTax", request)
                 .retrieve()
-                .bodyToMono(TaxValueResponse.class)
+                .bodyToMono(TaxesServiceResponse.class)
                 .retryWhen(Retry.backoff(3, Duration.ofSeconds(2)).jitter(0.75)
-                        .filter(throwable -> throwable instanceof TimeoutException)).block();
+                        .filter(TimeoutException.class::isInstance)).block();
 
     }
 
@@ -57,7 +57,7 @@ public class TaxService { //TODO MOVE WEBCLIENT LOGIC TO WEBCLIENT CONFIGURATION
             if (clientResponse.statusCode().is5xxServerError()) {
                 logger.error("error 5xx getting taxes from service");
                 return clientResponse.bodyToMono(String.class)
-                        .flatMap(errorBody -> Mono.error(new NoTaxServiceException(errorBody)));
+                        .flatMap(errorBody -> Mono.error(new NoTaxService500Exception(errorBody)));
             } else if (clientResponse.statusCode().is4xxClientError()) {
                 logger.error("error 4xx getting taxes from service");
                 return clientResponse.bodyToMono(String.class)

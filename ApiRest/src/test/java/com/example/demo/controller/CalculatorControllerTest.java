@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.CalculateTaxRequest;
-import com.example.demo.model.CalculateTaxResponse;
+import com.example.demo.model.services.calculate.CalculateTaxRequest;
+import com.example.demo.model.services.calculate.CalculateTaxResponse;
 import com.example.demo.service.CalculatorService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
