@@ -2,8 +2,8 @@ package com.example.demo.service;
 
 import com.example.demo.exception.NoTaxService400Exception;
 import com.example.demo.exception.NoTaxServiceException;
-import com.example.demo.model.external.TaxValueRequest;
 import com.example.demo.model.external.TaxValueResponse;
+import com.example.demo.model.external.TaxesServiceRequest;
 import io.netty.handler.timeout.TimeoutException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +33,7 @@ public class TaxService { //TODO MOVE WEBCLIENT LOGIC TO WEBCLIENT CONFIGURATION
 
     }
 
-    public TaxValueResponse getTaxes(TaxValueRequest request) {
+    public TaxValueResponse getTaxes(TaxesServiceRequest request) {
         logger.info("Creating webclient for call taxes service");
         WebClient client = WebClient.builder()
                 .baseUrl("https://www.mockachino.com/428acb5c-9f6a-45")
@@ -63,7 +63,7 @@ public class TaxService { //TODO MOVE WEBCLIENT LOGIC TO WEBCLIENT CONFIGURATION
                 return clientResponse.bodyToMono(String.class)
                         .flatMap(errorBody -> Mono.error(new NoTaxService400Exception(errorBody)));
             } else {
-                logger.info("success getting taxes service");
+                logger.info("success getting taxes from external service");
                 return Mono.just(clientResponse);
             }
         });

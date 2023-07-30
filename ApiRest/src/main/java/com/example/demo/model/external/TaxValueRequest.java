@@ -6,8 +6,20 @@ public class TaxValueRequest {
         @JsonProperty
         private String taxesName;
 
-        public TaxValueRequest(String taxesName) {
+        @JsonProperty
+        private Double firstNumber;
+
+        @JsonProperty
+        private Double secondNumber;
+
+
+        public TaxValueRequest(String taxesName, Double firstNumber, Double secondNumber) {
                 this.taxesName = taxesName;
+                this.firstNumber = firstNumber;
+                this.secondNumber = secondNumber;
+        }
+
+        public TaxValueRequest() {
         }
 
         public String getTaxesName() {
@@ -16,5 +28,21 @@ public class TaxValueRequest {
 
         public void setTaxesName(String taxesName) {
                 this.taxesName = taxesName;
+        }
+
+        public Double getFirstNumber() {
+                return firstNumber;
+        }
+
+        public void setFirstNumber(Double firstNumber) {
+                this.firstNumber = firstNumber;
+        }
+
+        public Double getSecondNumber() {
+                return secondNumber;
+        }
+
+        public void setSecondNumber(Double secondNumber) {
+                this.secondNumber = secondNumber;
         }
 }

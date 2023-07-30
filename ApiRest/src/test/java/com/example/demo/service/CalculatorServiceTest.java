@@ -6,7 +6,6 @@ import com.example.demo.model.CalculateTaxResponse;
 import com.example.demo.model.external.TaxValueRequest;
 import com.example.demo.model.external.TaxValueResponse;
 import com.example.demo.service.api.LoggingEventService;
-import com.example.demo.service.api.PercentageCacheService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -42,11 +41,11 @@ public class CalculatorServiceTest {
     public void testGetTaxes_SuccessfulResponse() {
         // Arrange
         TaxValueRequest request = new TaxValueRequest("taxesName");
-        TaxValueResponse response = new TaxValueResponse("123456",0.1);
+        TaxValueResponse response = new TaxValueResponse("123456","iigg",0.1);
         when(taxRepository.getTaxes(request)).thenReturn(response);
 
         // Act
-        Double result = calculatorService.getTaxes();
+        Double result = calculatorService.getExternalTaxes();
 
         // Assert
         assertNotNull(result);
@@ -60,7 +59,7 @@ public class CalculatorServiceTest {
         when(taxRepository.getTaxes(request)).thenThrow(new RuntimeException("Test exception"));
 
         // Act and Assert
-        assertThrows(NoTaxValueException.class, () -> calculatorService.getTaxes());
+        assertThrows(NoTaxValueException.class, () -> calculatorService.getExternalTaxes());
         // Add more assertions based on expected behavior of the method when an exception is thrown
     }
 
@@ -69,7 +68,7 @@ public class CalculatorServiceTest {
         // Arrange
         double taxValue = 0.1; // Example tax value for testing
         CalculateTaxRequest chargesRequest = new CalculateTaxRequest(10.0, 20.0);
-        when(calculatorService.getTaxes()).thenReturn(taxValue);
+        when(calculatorService.getExternalTaxes()).thenReturn(taxValue);
 
         // Act
         CalculateTaxResponse response = calculatorService.calculateTax(chargesRequest);

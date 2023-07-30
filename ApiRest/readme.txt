@@ -3,7 +3,7 @@ must: add JWT,add logger to all services and controller, hide users passwords an
 
 optative: add lombok, mapstruct
 
-
+in progress swagger http://localhost:8080/swagger-ui/index.html
 
 
 dependencies
@@ -11,6 +11,16 @@ dependencies
 gson
 spring
 postgresql
+
+
+
+controller responsabilicy mapper object
+
+service business logic
+
+repository access dbs
+
+config configuration of dependencies
 
 
 the redis is not configure for scaling, the rate limiter will not work property

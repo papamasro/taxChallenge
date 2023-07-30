@@ -20,13 +20,13 @@ import java.util.concurrent.CompletableFuture;
 @Service
 public class LoggingEventService {
 
-    private static final Logger logger = LoggerFactory.getLogger(TaxService.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoggingEventService.class);
 
     @Autowired
     private HistoryPagRepository callHistoryPagRepository;
 
     @Autowired
-    private HistoryRepository historyRepository; //TODO ESTA BIEN ESTE DOBLE REPO?
+    private HistoryRepository historyRepository;
 
     public void saveCallHistory(String endpoint, int statusCode, String response) {
             CallHistory callHistory = new CallHistory();
@@ -40,8 +40,7 @@ public class LoggingEventService {
     }
 
     public Page<CallHistory> getCallHistory(int page, int size) {
-        logger.info("getting history call of BD");
-
+        logger.info("getting history calls from BD");
         Pageable pageable = PageRequest.of(page, size, Sort.by("timestamp").descending());
         Page<CallHistory> callHistoryPage = callHistoryPagRepository.findAll(pageable);
         saveCallHistory("getCallHistory",200,callHistoryPage.toString());
