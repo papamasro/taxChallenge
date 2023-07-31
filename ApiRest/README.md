@@ -1,3 +1,21 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+health up http://localhost:8080/actuator/health
+
+
+
 improvements
 must: add JWT,add logger to all services and controller, hide users passwords and urls of dbs, micrometer and grafana
 

@@ -7,9 +7,10 @@ import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @RedisHash(value = "TAXES", timeToLive = 1800)
-public class TaxesCache implements Serializable {
+public class TaxesPercentCache implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,15 +18,15 @@ public class TaxesCache implements Serializable {
     @Indexed
     private String name;
     private String timestamp;
-    private Double value;
+    private BigDecimal value;
 
-    public TaxesCache(String name, String timestamp, Double value) {
+    public TaxesPercentCache(String name, String timestamp, BigDecimal value) {
         this.name = name;
         this.timestamp = timestamp;
         this.value = value;
     }
 
-    public TaxesCache() {
+    public TaxesPercentCache() {
     }
 
     public Integer getId() {
@@ -52,11 +53,11 @@ public class TaxesCache implements Serializable {
         this.timestamp = timestamp;
     }
 
-    public Double getValue() {
+    public BigDecimal getValue() {
         return value;
     }
 
-    public void setValue(Double value) {
+    public void setValue(BigDecimal value) {
         this.value = value;
     }
 }

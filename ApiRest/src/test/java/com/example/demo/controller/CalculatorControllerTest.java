@@ -3,7 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.model.services.calculate.CalculateTaxRequest;
 import com.example.demo.model.services.calculate.CalculateTaxResponse;
 import com.example.demo.model.services.calculate.TaxValueRequest;
-import com.example.demo.service.CalculatorService;
+import com.example.demo.service.impl.CalculatorService;
 import com.example.demo.util.DateFormatter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +12,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -29,14 +31,14 @@ public class CalculatorControllerTest {
         MockitoAnnotations.openMocks(this);
     }
 
+    BigDecimal first = new BigDecimal("10.0");
+    BigDecimal second = new BigDecimal("20.0");
+    BigDecimal tax = new BigDecimal("0.10");
+    BigDecimal expectedTaxValue = new BigDecimal("33.0");
+
     @Test
     public void testCalculateTax() {
-        // Arrange
-        double first = 10.0;
-        double second = 20.0;
-        double tax = 0.1;
 
-        double expectedTaxValue = 30.0;
 
         CalculateTaxRequest calculateTaxRequest = new CalculateTaxRequest(first, second);
         TaxValueRequest taxValueRequest = new TaxValueRequest("IIGG", first, second);

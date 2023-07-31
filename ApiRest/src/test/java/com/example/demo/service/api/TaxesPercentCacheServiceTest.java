@@ -1,19 +1,21 @@
 package com.example.demo.service.api;
 
-import com.example.demo.model.jpa.TaxesCache;
+import com.example.demo.model.jpa.TaxesPercentCache;
 import com.example.demo.repository.TaxesRedisRepository;
+import com.example.demo.service.impl.api.TaxesCacheService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class TaxesCacheServiceTest {
+public class TaxesPercentCacheServiceTest {
 
     @Mock
     private TaxesRedisRepository taxesRedisRepository;
@@ -26,22 +28,21 @@ public class TaxesCacheServiceTest {
         MockitoAnnotations.openMocks(this);
     }
 
-
     String taxName = "IIGG";
     String timestamp = "12345";
-    double firstNumber = 10.0;
-    double secondNumber = 20.0;
-    double externalTaxes = 0.1; // 10% tax rate for testing purposes
-    double expectedResult = 33.0; // (10 + 20) + (10 + 20) * 0.1 = 33.0
+    BigDecimal firstNumber = new BigDecimal(10.0);
+    BigDecimal secondNumber = new BigDecimal(20.0);
+    BigDecimal externalTaxes = new BigDecimal(0.10);
+    BigDecimal expectedResult = new BigDecimal(33.0);
     @Test
     public void testGetLastTaxesFromCache() {
-        TaxesCache expectedTaxesCache = new TaxesCache(taxName,timestamp,externalTaxes);
+        TaxesPercentCache expectedTaxesPercentCache = new TaxesPercentCache(taxName,timestamp,externalTaxes);
 
-        when(taxesRedisRepository.findByName(taxName)).thenReturn(expectedTaxesCache);
+        when(taxesRedisRepository.findByName(taxName)).thenReturn(expectedTaxesPercentCache);
 
-        Optional<TaxesCache> result = taxesCacheService.getLastTaxesFromCache(taxName);
+        Optional<TaxesPercentCache> result = taxesCacheService.getLastTaxesFromCache(taxName);
 
-        assertEquals(expectedTaxesCache, result.orElse(null));
+        assertEquals(expectedTaxesPercentCache, result.orElse(null));
 
         verify(taxesRedisRepository, times(1)).findByName(taxName);
     }
@@ -51,7 +52,7 @@ public class TaxesCacheServiceTest {
 
         when(taxesRedisRepository.findByName(taxName)).thenReturn(null);
 
-        Optional<TaxesCache> result = taxesCacheService.getLastTaxesFromCache(taxName);
+        Optional<TaxesPercentCache> result = taxesCacheService.getLastTaxesFromCache(taxName);
 
         assertEquals(null, result.orElse(null));
 
@@ -60,10 +61,10 @@ public class TaxesCacheServiceTest {
 
     @Test
     public void testSaveTaxesCache() {
-        TaxesCache taxesCache = new TaxesCache(taxName,timestamp,externalTaxes);
+        TaxesPercentCache taxesPercentCache = new TaxesPercentCache(taxName,timestamp,externalTaxes);
 
-        taxesCacheService.saveTaxesCache(taxesCache);
+        taxesCacheService.saveTaxesCache(taxesPercentCache);
 
-        verify(taxesRedisRepository, times(1)).save(taxesCache);
+        verify(taxesRedisRepository, times(1)).save(taxesPercentCache);
     }
 }

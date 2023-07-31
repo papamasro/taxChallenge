@@ -1,7 +1,8 @@
-package com.example.demo.service;
+package com.example.demo.service.impl;
 
 import com.example.demo.model.external.TaxesServiceRequest;
 import com.example.demo.model.external.TaxesServiceResponse;
+import com.example.demo.service.TaxPercent;
 import io.netty.handler.timeout.TimeoutException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,11 +14,11 @@ import reactor.util.retry.Retry;
 import java.time.Duration;
 
 @Service
-public class TaxService {
-    private static final Logger logger = LoggerFactory.getLogger(TaxService.class);
+public class TaxPercentService implements TaxPercent {
+    private static final Logger logger = LoggerFactory.getLogger(TaxPercentService.class);
     private final WebClient.Builder webClientBuilder;
     @Autowired
-    public TaxService(WebClient.Builder webClientBuilder) {
+    public TaxPercentService(WebClient.Builder webClientBuilder) {
         this.webClientBuilder = webClientBuilder;
     }
 
@@ -26,6 +27,7 @@ public class TaxService {
         return webClientBuilder
                 .build()
                 .get()
+               // .uri("/getError", request) //ERROR 404 EXAMPLE
                 .uri("/getTax", request)
                 .retrieve()
                 .bodyToMono(TaxesServiceResponse.class)

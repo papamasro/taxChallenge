@@ -1,13 +1,13 @@
 package com.example.demo.service;
 
 import com.example.demo.exception.NoTaxValueException;
-import com.example.demo.model.jpa.TaxesCache;
-import com.example.demo.model.services.calculate.CalculateTaxRequest;
+import com.example.demo.model.jpa.TaxesPercentCache;
 import com.example.demo.model.services.calculate.CalculateTaxResponse;
 import com.example.demo.model.services.calculate.TaxValueRequest;
 import com.example.demo.model.external.TaxesServiceResponse;
-import com.example.demo.service.api.LoggingEventService;
-import com.example.demo.service.api.TaxesCacheService;
+import com.example.demo.service.impl.CalculatorService;
+import com.example.demo.service.impl.TaxPercentService;
+import com.example.demo.service.impl.api.TaxesCacheService;
 import com.example.demo.util.DateFormatter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,7 +25,7 @@ import static org.mockito.Mockito.*;
 public class CalculatorServiceTest {
 
     @Mock
-    private TaxService taxRepository;
+    private TaxPercentService taxRepository;
 
     @Mock
     private TaxesCacheService taxesCacheService;
@@ -39,10 +40,10 @@ public class CalculatorServiceTest {
 
     String taxName = "IIGG";
     String timestamp = "12345";
-    double firstNumber = 10.0;
-    double secondNumber = 20.0;
-    double externalTaxes = 0.1; // 10% tax rate for testing purposes
-    double expectedResult = 33.0; // (10 + 20) + (10 + 20) * 0.1 = 33.0
+    BigDecimal firstNumber = new BigDecimal("10.0");
+    BigDecimal secondNumber = new BigDecimal("20.0");
+    BigDecimal externalTaxes = new BigDecimal("0.10");
+    BigDecimal expectedResult = new BigDecimal("33");
 
     @Test
     public void testCalculateTax() {
@@ -54,7 +55,7 @@ public class CalculatorServiceTest {
         CalculateTaxResponse result = calculatorService.calculateTax(taxValueRequest);
 
         assertEquals(externalTaxes, result.getTax());
-        assertEquals(expectedResult, result.getResult());
+        assertEquals(expectedResult, result.getResult().setScale(0, BigDecimal.ROUND_UP));
 
         verify(taxRepository, times(1)).getTaxes(any());
     }
@@ -65,13 +66,13 @@ public class CalculatorServiceTest {
         TaxValueRequest taxValueRequest = new TaxValueRequest(taxName, firstNumber, secondNumber);
         when(taxRepository.getTaxes(any())).thenReturn(null);
 
-        TaxesCache taxesCache = new TaxesCache(taxName, DateFormatter.getStringDate(), externalTaxes);
-        when(taxesCacheService.getLastTaxesFromCache(taxName)).thenReturn(Optional.of(taxesCache));
+        TaxesPercentCache taxesPercentCache = new TaxesPercentCache(taxName, DateFormatter.getStringDate(), externalTaxes);
+        when(taxesCacheService.getLastTaxesFromCache(taxName)).thenReturn(Optional.of(taxesPercentCache));
 
         CalculateTaxResponse result = calculatorService.calculateTax(taxValueRequest);
 
         assertEquals(externalTaxes, result.getTax());
-        assertEquals(expectedResult, result.getResult());
+        assertEquals(expectedResult, result.getResult().setScale(0, BigDecimal.ROUND_UP));
 
         verify(taxRepository, times(1)).getTaxes(any());
         verify(taxesCacheService, times(1)).getLastTaxesFromCache(taxName);

@@ -1,20 +1,18 @@
-package com.example.demo.service.api;
+package com.example.demo.service.impl.api;
 
 import com.example.demo.model.jpa.CallHistory;
 import com.example.demo.repository.HistoryPagRepository;
 import com.example.demo.repository.HistoryRepository;
+import com.example.demo.service.LoggingEvent;
 import com.example.demo.util.DateFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LoggingEventService {
+public class LoggingEventService implements LoggingEvent {
 
     private static final Logger logger = LoggerFactory.getLogger(LoggingEventService.class);
 
@@ -30,14 +28,15 @@ public class LoggingEventService {
         callHistory.setEndpoint(endpoint);
         callHistory.setStatusCode(statusCode);
         callHistory.setResponse(response);
-        logger.info("saving history call on BD");
+        String msg = "saving history service call with endpoint: "+ endpoint + " and status code " + statusCode;
+        logger.info(msg);
         historyRepository.save(callHistory);
     }
 
-    public Page<CallHistory> getCallHistory(int page, int size) {
+    public Page<CallHistory> getSuccessCallHistory(int page, int size) {
         logger.info("getting history calls from BD");
         Pageable pageable = PageRequest.of(page, size, Sort.by("timestamp").descending());
-        Page<CallHistory> callHistoryPage = callHistoryPagRepository.findAll(pageable);
+        Page<CallHistory> callHistoryPage = callHistoryPagRepository.findAllByStatusCode(200,pageable);
         saveCallHistory("getCallHistory", 200, callHistoryPage.toString());
         logger.info("success getting history calls of BD");
         return callHistoryPage;

@@ -1,25 +1,12 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.jpa.CallHistory;
-import com.example.demo.model.services.logger.LoggerEventResponse;
-import com.example.demo.service.api.LoggingEventService;
+import com.example.demo.service.impl.api.LoggingEventService;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 public class LoggingEventControllerTest {
 

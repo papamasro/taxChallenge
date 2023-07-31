@@ -2,19 +2,21 @@ package com.example.demo.model.services.calculate;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.math.BigDecimal;
+
 public class TaxValueRequest {
 
     @JsonProperty
     private String taxesName;
 
     @JsonProperty
-    private Double firstNumber;
+    private BigDecimal firstNumber;
 
     @JsonProperty
-    private Double secondNumber;
+    private BigDecimal secondNumber;
 
 
-    public TaxValueRequest(String taxesName, Double firstNumber, Double secondNumber) {
+    public TaxValueRequest(String taxesName, BigDecimal firstNumber, BigDecimal secondNumber) {
         this.taxesName = taxesName;
         this.firstNumber = firstNumber;
         this.secondNumber = secondNumber;
@@ -31,19 +33,19 @@ public class TaxValueRequest {
         this.taxesName = taxesName;
     }
 
-    public Double getFirstNumber() {
+    public BigDecimal getFirstNumber() {
         return firstNumber;
     }
 
-    public void setFirstNumber(Double firstNumber) {
+    public void setFirstNumber(BigDecimal firstNumber) {
         this.firstNumber = firstNumber;
     }
 
-    public Double getSecondNumber() {
+    public BigDecimal getSecondNumber() {
         return secondNumber;
     }
 
-    public void setSecondNumber(Double secondNumber) {
+    public void setSecondNumber(BigDecimal secondNumber) {
         this.secondNumber = secondNumber;
     }
 }

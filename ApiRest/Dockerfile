@@ -1,8 +1,12 @@
-# select parent image
 FROM maven:3.8.3-openjdk-17
-# copy the source tree and the pom.xml to our new container
-COPY ./ ./
-# package our application code
-RUN mvn clean package
-# set the startup command to execute the jar
-CMD ["java", "-jar", "app.jar"]
+
+WORKDIR /project
+COPY pom.xml ./
+ADD src ./src
+RUN mvn clean install
+
+FROM eclipse-temurin:17-jdk-alpine
+VOLUME /tmp
+ARG JAR_FILE=app.jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","./app.jar"]

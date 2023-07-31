@@ -1,23 +1,30 @@
 package com.example.demo.model.services.calculate;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.annotation.Nonnull;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
+import java.math.BigDecimal;
 
 
 public class CalculateTaxRequest {
 
     @JsonProperty
-    @Nonnull
-    @NotEmpty
-    private Double first;
+    @Valid
+    @NotNull
+    @DecimalMin("0.0")
+    private BigDecimal first;
 
     @JsonProperty
-    @Nonnull
-    @NotEmpty
-    private Double second;
+    @Valid
+    @NotNull
+    @DecimalMin("0.0")
+    private BigDecimal second;
 
-    public CalculateTaxRequest(Double first, Double second) {
+    public CalculateTaxRequest(BigDecimal first, BigDecimal second) {
         this.first = first;
         this.second = second;
     }
@@ -25,19 +32,19 @@ public class CalculateTaxRequest {
     public CalculateTaxRequest() {
     }
 
-    public Double getFirst() {
+    public BigDecimal getFirst() {
         return first;
     }
 
-    public void setFirst(Double first) {
+    public void setFirst(BigDecimal first) {
         this.first = first;
     }
 
-    public Double getSecond() {
+    public BigDecimal getSecond() {
         return second;
     }
 
-    public void setSecond(Double second) {
+    public void setSecond(BigDecimal second) {
         this.second = second;
     }
 }

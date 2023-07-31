@@ -11,25 +11,26 @@ services:
       - 8080:8080
     environment:
       - DATABASE_URL=jdbc:postgresql://java_db:5432/postgres
-      - DATABASE_USERNAME=postgres #TODO: OCULTAR
-      - DATABASE_PASSWORD=postgres
+      - DATABASE_USERNAME=postgres #TODO: HIDE IN DOCKER PARAMS
+      - DATABASE_PASSWORD=postgres #TODO: HIDE IN DOCKER PARAMS
     depends_on:
-      - postgre_db
-
-  postgre_db:
+      - postgres_db
+      - redis
+  postgres_db:
     container_name: java_db
     image: postgres:12
     ports:
-      - 5432:5432
+      - "5432:5432"
     environment:
-      POSTGRES_USER: postgres  #TODO: OCULTAR
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres  #TODO: HIDE IN DOCKER PARAMS
+      POSTGRES_PASSWORD: postgres #TODO: HIDE IN  DOCKER PARAMS
       POSTGRES_DB: postgres
 
   redis:
     image: redis:latest
+    container_name: redis
     ports:
       - "6379:6379"
     environment:
-      - ALLOW_EMPTY_PASSWORD=yes
+      - ALLOW_EMPTY_PASSWORD=yes #TODO: ADD PASSWORD
       - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
