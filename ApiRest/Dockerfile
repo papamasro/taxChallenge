@@ -1,4 +1,8 @@
-FROM openjdk:17-oracle
-ADD ./target/spring-boot-redis-cache-0.0.1-SNAPSHOT.jar /usr/src/spring-boot-redis-cache-0.0.1-SNAPSHOT.jar
-WORKDIR usr/src
-ENTRYPOINT ["java","-jar", "spring-boot-redis-cache-0.0.1-SNAPSHOT.jar"]
+# select parent image
+FROM maven:3.8.3-openjdk-17
+# copy the source tree and the pom.xml to our new container
+COPY ./ ./
+# package our application code
+RUN mvn clean package
+# set the startup command to execute the jar
+CMD ["java", "-jar", "app.jar"]

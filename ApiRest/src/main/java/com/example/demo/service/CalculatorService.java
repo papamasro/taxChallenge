@@ -1,11 +1,11 @@
 package com.example.demo.service;
 
 import com.example.demo.exception.NoTaxValueException;
-import com.example.demo.model.services.calculate.CalculateTaxResponse;
-import com.example.demo.model.services.calculate.TaxValueRequest;
 import com.example.demo.model.external.TaxesServiceRequest;
 import com.example.demo.model.external.TaxesServiceResponse;
 import com.example.demo.model.jpa.TaxesCache;
+import com.example.demo.model.services.calculate.CalculateTaxResponse;
+import com.example.demo.model.services.calculate.TaxValueRequest;
 import com.example.demo.service.api.LoggingEventService;
 import com.example.demo.service.api.TaxesCacheService;
 import com.example.demo.util.DateFormatter;

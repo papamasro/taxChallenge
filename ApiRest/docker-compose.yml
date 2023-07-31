@@ -4,7 +4,9 @@ services:
   java_app:
     container_name: java_app
     image: demo-java_app:1.0.0
-    build: .
+    build:
+     context: ./ # Directorio donde se encuentra el Dockerfile de tu aplicación Spring Boot
+     dockerfile: Dockerfile # Nombre del archivo Dockerfile
     ports:
       - 8080:8080
     environment:
@@ -20,14 +22,14 @@ services:
     ports:
       - 5432:5432
     environment:
-      POSTGRES_USER: postgres  #TODO: OCULTAR o borrar duplicado
+      POSTGRES_USER: postgres  #TODO: OCULTAR
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
 
   redis:
     image: redis:latest
     ports:
-      - 6379:6379
+      - "6379:6379"
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
       - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL

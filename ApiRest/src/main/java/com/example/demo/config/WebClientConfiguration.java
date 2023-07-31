@@ -1,8 +1,7 @@
 package com.example.demo.config;
 
-import com.example.demo.exception.NoTaxService400Exception;
-import com.example.demo.exception.NoTaxService500Exception;
-import io.netty.handler.timeout.TimeoutException;
+import com.example.demo.exception.NoTaxExternalService400Exception;
+import com.example.demo.exception.NoTaxExternalService500Exception;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +12,6 @@ import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
-import reactor.util.retry.Retry;
 
 import java.time.Duration;
 
@@ -30,10 +28,10 @@ public class WebClientConfiguration {
         return ExchangeFilterFunction.ofResponseProcessor(clientResponse -> {
             if (clientResponse.statusCode().is5xxServerError()) {
                 return clientResponse.bodyToMono(String.class)
-                        .flatMap(errorBody -> Mono.error(new NoTaxService500Exception(errorBody)));
+                        .flatMap(errorBody -> Mono.error(new NoTaxExternalService500Exception(errorBody)));
             } else if (clientResponse.statusCode().is4xxClientError()) {
                 return clientResponse.bodyToMono(String.class)
-                        .flatMap(errorBody -> Mono.error(new NoTaxService400Exception(errorBody)));
+                        .flatMap(errorBody -> Mono.error(new NoTaxExternalService400Exception(errorBody)));
             } else {
                 return Mono.just(clientResponse);
             }
