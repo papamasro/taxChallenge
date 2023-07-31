@@ -5,29 +5,35 @@ import com.example.demo.repository.HistoryPagRepository;
 import com.example.demo.repository.HistoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.*;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 public class LoggingEventServiceTest {
 
-    private LoggingEventService loggingEventService;
+    @Mock
     private HistoryPagRepository callHistoryPagRepository;
+
+    @Mock
     private HistoryRepository historyRepository;
+
+    @InjectMocks
+    private LoggingEventService loggingEventService;
 
     @BeforeEach
     public void setUp() {
-        callHistoryPagRepository = mock(HistoryPagRepository.class);
-        historyRepository = mock(HistoryRepository.class);
-       // loggingEventService = new LoggingEventService(callHistoryPagRepository, historyRepository);
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
@@ -35,38 +41,51 @@ public class LoggingEventServiceTest {
         // Arrange
         String endpoint = "testEndpoint";
         int statusCode = 200;
-        String response = "Test response";
+        String response = "testResponse";
 
         // Act
         loggingEventService.saveCallHistory(endpoint, statusCode, response);
 
         // Assert
         verify(historyRepository, times(1)).save(any(CallHistory.class));
-        // Aquí también podrías verificar los registros de log utilizando un captor de log si es necesario.
     }
 
     @Test
-    public void testGetCallHistory() throws ExecutionException, InterruptedException {
+    public void testGetCallHistory() {
         // Arrange
         int page = 0;
         int size = 10;
-        PageRequest pageable = PageRequest.of(page, size, Sort.by("timestamp").descending());
-        CallHistory callHistory = new CallHistory();
-        // Agrega los campos relevantes a callHistory
+        List<CallHistory> callHistoryList = new ArrayList<>();
+        callHistoryList.add(new CallHistory(/* Initialize CallHistory object here */));
+        Page<CallHistory> pageResult = new PageImpl<>(callHistoryList);
 
-        // Crea una lista con el único objeto CallHistory para simular el resultado de la página
-        Page<CallHistory> callHistoryPage = new PageImpl<>(Collections.singletonList(callHistory), pageable, 1);
-        when(callHistoryPagRepository.findAll(pageable)).thenReturn(callHistoryPage);
+        Pageable pageable = PageRequest.of(page, size, Sort.by("timestamp").descending());
+        when(callHistoryPagRepository.findAll(pageable)).thenReturn(pageResult);
 
-        // Act
-        CompletableFuture<Page<CallHistory>> future = CompletableFuture.supplyAsync(
-                () -> loggingEventService.getCallHistory(page, size));
-        Page<CallHistory> result = future.get(); // Espera al resultado
+        Page<CallHistory> result = loggingEventService.getCallHistory(page, size);
 
-        // Assert
+        assertEquals(pageResult, result);
+
+        verify(callHistoryPagRepository, times(1)).findAll(pageable);
         verify(historyRepository, times(1)).save(any(CallHistory.class));
-        assertEquals(callHistoryPage, result);
     }
 
-    // Si deseas testear la función mapToDTO, puedes hacerlo separadamente, aunque en este caso no parece necesario.
+    @Test
+    public void testGetCallHistoryWithEmptyPage() {
+        // Arrange
+        int page = 0;
+        int size = 10;
+        List<CallHistory> callHistoryList = new ArrayList<>();
+        Page<CallHistory> emptyPage = new PageImpl<>(callHistoryList);
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by("timestamp").descending());
+        when(callHistoryPagRepository.findAll(pageable)).thenReturn(emptyPage);
+
+        Page<CallHistory> result = loggingEventService.getCallHistory(page, size);
+
+        assertTrue(result.isEmpty());
+
+        verify(callHistoryPagRepository, times(1)).findAll(pageable);
+        verify(historyRepository, times(1)).save(any(CallHistory.class));
+    }
 }

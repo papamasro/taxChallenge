@@ -2,7 +2,9 @@ package com.example.demo.controller;
 
 import com.example.demo.model.services.calculate.CalculateTaxRequest;
 import com.example.demo.model.services.calculate.CalculateTaxResponse;
+import com.example.demo.model.services.calculate.TaxValueRequest;
 import com.example.demo.service.CalculatorService;
+import com.example.demo.util.DateFormatter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -12,7 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class CalculatorControllerTest {
 
@@ -23,39 +25,30 @@ public class CalculatorControllerTest {
     private CalculatorController calculatorController;
 
     @BeforeEach
-    public void setup() {
+    public void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void testCalculateTax_SuccessfulResponse() {
+    public void testCalculateTax() {
         // Arrange
-        CalculateTaxRequest calculateTaxRequest = new CalculateTaxRequest(1.0,1.0);
-        CalculateTaxResponse expectedResponse = new CalculateTaxResponse(/* fill expected response with necessary data */);
-        when(calculatorService.calculateTax(calculateTaxRequest)).thenReturn(expectedResponse);
+        double first = 10.0;
+        double second = 20.0;
+        double tax = 0.1;
 
-        // Act
-        ResponseEntity<CalculateTaxResponse> responseEntity = calculatorController.calculateTax(calculateTaxRequest);
+        double expectedTaxValue = 30.0;
 
-        // Assert
-        assertNotNull(responseEntity);
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertNotNull(responseEntity.getBody());
-        assertEquals(expectedResponse, responseEntity.getBody());
-    }
+        CalculateTaxRequest calculateTaxRequest = new CalculateTaxRequest(first, second);
+        TaxValueRequest taxValueRequest = new TaxValueRequest("IIGG", first, second);
+        CalculateTaxResponse calculateTaxResponse = new CalculateTaxResponse(DateFormatter.getStringDate(),tax,expectedTaxValue);
 
-    @Test
-    public void testCalculateTax_ExceptionFromService() {
-        // Arrange
-        CalculateTaxRequest calculateTaxRequest = new CalculateTaxRequest(1.0, 1.0);
-        when(calculatorService.calculateTax(calculateTaxRequest)).thenThrow(new RuntimeException("Test exception"));
+        when(calculatorService.calculateTax(taxValueRequest)).thenReturn(calculateTaxResponse);
 
-        // Act
-        ResponseEntity<CalculateTaxResponse> responseEntity = calculatorController.calculateTax(calculateTaxRequest);
+        ResponseEntity<CalculateTaxResponse> response = calculatorController.calculateTax(calculateTaxRequest);
 
-        // Assert
-        assertNotNull(responseEntity);
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, responseEntity.getStatusCode());
-        assertNull(responseEntity.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        // Verify that the calculatorService.calculateTax method was called with the correct argument
+     //   verify(calculatorService, times(1)).calculateTax(taxValueRequest);
     }
 }

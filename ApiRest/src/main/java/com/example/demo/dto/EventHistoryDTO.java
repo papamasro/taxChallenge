@@ -1,15 +1,15 @@
 package com.example.demo.dto;
 
-public class HistoryDTO {
+public class EventHistoryDTO {
     private String timestamp;
     private String endpoint;
     private Integer statusCode;
     private String response;
 
-    public HistoryDTO() {
+    public EventHistoryDTO() {
     }
 
-    public HistoryDTO(String timestamp, String endpoint, Integer statusCode, String response) {
+    public EventHistoryDTO(String timestamp, String endpoint, Integer statusCode, String response) {
         this.timestamp = timestamp;
         this.endpoint = endpoint;
         this.statusCode = statusCode;

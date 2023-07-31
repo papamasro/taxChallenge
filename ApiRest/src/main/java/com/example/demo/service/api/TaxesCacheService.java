@@ -11,7 +11,7 @@ import java.util.Optional;
 public class TaxesCacheService {
 
     @Autowired
-    private TaxesRedisRepository taxesRedisRepository; //TODO ESTA BIEN ESTE DOBLE REPO?
+    private TaxesRedisRepository taxesRedisRepository;
 
     public Optional<TaxesCache> getLastTaxesFromCache(String name) {
         return Optional.ofNullable(taxesRedisRepository.findByName(name));

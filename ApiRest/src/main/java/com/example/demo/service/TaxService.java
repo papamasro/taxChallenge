@@ -7,6 +7,7 @@ import com.example.demo.model.external.TaxesServiceResponse;
 import io.netty.handler.timeout.TimeoutException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -25,47 +26,23 @@ import java.time.Duration;
 public class TaxService { //TODO MOVE WEBCLIENT LOGIC TO WEBCLIENT CONFIGURATION CLASS IF WILL BE REUSED
     private static final Logger logger = LoggerFactory.getLogger(TaxService.class);
 
-    @Value("${webclient.timeout}")
-    private int timeout;
 
-    private static HttpClient getHttpClientWithTimeout(int seconds) {
-        return HttpClient.create().responseTimeout(Duration.ofSeconds(seconds));
+    private final WebClient.Builder webClientBuilder;
 
+    @Autowired
+    public TaxService(WebClient.Builder webClientBuilder) {
+        this.webClientBuilder = webClientBuilder;
     }
 
     public TaxesServiceResponse getTaxes(TaxesServiceRequest request) {
-        logger.info("Creating webclient for call external taxes service");
-        WebClient client = WebClient.builder()
-                .baseUrl("https://www.mockachino.com/428acb5c-9f6a-45")
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .filter(errorHandler())
-                .clientConnector(new ReactorClientHttpConnector(getHttpClientWithTimeout(timeout)))
-                //    .defaultUriVariables(Collections.singletonMap("url", "http://localhost:8080"))
-                .build();
-        //TODO CALL URL BUILDER TO SIMULATE ERROR
-        return client.get()
+        return webClientBuilder
+                .build()
+                .get()
                 .uri("/getTax", request)
                 .retrieve()
                 .bodyToMono(TaxesServiceResponse.class)
                 .retryWhen(Retry.backoff(3, Duration.ofSeconds(2)).jitter(0.75)
-                        .filter(TimeoutException.class::isInstance)).block();
-
-    }
-
-    public static ExchangeFilterFunction errorHandler() {
-        return ExchangeFilterFunction.ofResponseProcessor(clientResponse -> {
-            if (clientResponse.statusCode().is5xxServerError()) {
-                logger.error("error 5xx getting taxes from service");
-                return clientResponse.bodyToMono(String.class)
-                        .flatMap(errorBody -> Mono.error(new NoTaxService500Exception(errorBody)));
-            } else if (clientResponse.statusCode().is4xxClientError()) {
-                logger.error("error 4xx getting taxes from service");
-                return clientResponse.bodyToMono(String.class)
-                        .flatMap(errorBody -> Mono.error(new NoTaxService400Exception(errorBody)));
-            } else {
-                logger.info("success getting taxes from external service");
-                return Mono.just(clientResponse);
-            }
-        });
+                        .filter(TimeoutException.class::isInstance))
+                .block();
     }
 }

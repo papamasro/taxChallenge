@@ -75,10 +75,12 @@ public class CalculatorService {
         Double resultAddNumbers = chargesRequest.getFirstNumber() + chargesRequest.getSecondNumber();
         Double charges = (resultAddNumbers * externalTaxes);
         Double resultWithCharges = resultAddNumbers + charges;
+        Gson gson = new Gson();
+        CalculateTaxResponse calculateTaxResponse = new CalculateTaxResponse(DateFormatter.getStringDate(), externalTaxes, resultWithCharges);
         CompletableFuture.runAsync(() -> {
-            loggingEventService.saveCallHistory("calculateTax", 200, resultWithCharges.toString());
+            loggingEventService.saveCallHistory("calculateTax", 200, gson.toJson(calculateTaxResponse));
             logger.info("success saving history call on BD");
         });
-        return new CalculateTaxResponse(DateFormatter.getStringDate(), externalTaxes, resultWithCharges);
+        return calculateTaxResponse;
     }
 }
