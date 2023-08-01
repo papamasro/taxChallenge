@@ -1,42 +1,43 @@
-
 Requerimientos
-1 - Debes desarrollar una API REST en Spring Boot utilizando java 11 o superior, con las siguientes funcionalidades:
+Debes desarrollar una API REST en Spring Boot utilizando Java 11 o superior, con las siguientes funcionalidades:
+a) Debe contener un servicio llamado api-rest que reciba 2 números, los sume, y le aplique un porcentaje adquirido de un servicio externo. Por ejemplo, si el servicio recibe 5 y 5 como valores, y el porcentaje devuelto por el servicio externo es 10, entonces (5 + 5) + 10% = 11.
+Consideraciones:
 
-a) Debe contener un servicio llamado por api-rest que reciba 2 números, los sume, y le aplique una suba de un porcentaje que debe ser adquirido de un servicio externo (por ejemplo, si el servicio recibe 5 y 5 como valores, y el porcentaje devuelto por el servicio externo es 10, entonces (5 + 5) + 10% = 11). Se deben tener en cuenta las siguientes consideraciones:
-
-El servicio externo puede ser un mock, tiene que devolver el % sumado.
-Dado que ese % varía poco, podemos considerar que el valor que devuelve ese servicio no va cambiar por 30 minutos.
-Si el servicio externo falla, se debe devolver el último valor retornado. Si no hay valor, debe retornar un error la api.
+El servicio externo puede ser un mock y debe devolver el porcentaje sumado.
+El porcentaje devuelto por el servicio externo no cambiará en 30 minutos.
+Si el servicio externo falla, se debe devolver el último valor retornado. Si no hay valor, la API debe retornar un error.
 Si el servicio falla, se puede reintentar hasta 3 veces.
-b) Historial de todos los llamados a todos los endpoint junto con la respuesta en caso de haber sido exitoso. Responder en Json, con data paginada. El guardado del historial de llamadas no debe sumar tiempo al servicio invocado, y en caso de falla, no debe impactar el llamado al servicio principal.
+b) Historial de todos los llamados a todos los endpoints, junto con la respuesta en caso de haber sido exitoso. Responder en JSON, con datos paginados. El guardado del historial de llamadas no debe sumar tiempo al servicio invocado y, en caso de falla, no debe impactar el llamado al servicio principal.
 
-c) La api soporta recibir como máximo 3 rpm (request / minuto), en caso de superar ese umbral, debe retornar un error con el código http y mensaje adecuado.
+c) La API soporta recibir como máximo 3 RPM (request por minuto). En caso de superar ese umbral, debe retornar un error con el código HTTP y mensaje adecuado.
 
-d) El historial se debe almacenar en una database PostgreSQL.
+d) El historial se debe almacenar en una base de datos PostgreSQL.
 
-e) Incluir errores http. Mensajes y descripciones para la serie 4XX.
+e) Incluir errores HTTP. Mensajes y descripciones para la serie 4XX.
 
-2 - Se deben incluir tests unitarios.
+Se deben incluir tests unitarios.
 
-3 - Esta API debe ser desplegada en un docker container. Este docker puede estar en un dockerhub público. La base de datos también debe correr en un contenedor docker. Recomendación usar docker compose
+Esta API debe ser desplegada en un docker container. El docker puede estar en un dockerhub público. La base de datos también debe correr en un contenedor docker. Se recomienda usar docker compose.
 
-4 - Debes agregar un Postman Collection o Swagger para que probemos tu API
+Debes agregar un Postman Collection o Swagger para que probemos tu API.
 
-5 - Tu código debe estar disponible en un repositorio público, junto con las instrucciones de cómo desplegar el servicio y cómo utilizarlo.
+Tu código debe estar disponible en un repositorio público, junto con las instrucciones de cómo desplegar el servicio y cómo utilizarlo.
 
-6 - Tener en cuenta que la aplicación funcionará de la forma de un sistema distribuido donde puede existir más de una réplica del servicio funcionando en paralelo.
+Tener en cuenta que la aplicación funcionará de la forma de un sistema distribuido donde puede existir más de una réplica del servicio funcionando en paralelo.
+
+
+
 
 
 Introducción
-¡Bienvenido al repositorio del proyecto Tenpo Challenge! Este proyecto está desarrollado utilizando Spring!.
-
-Manejo de Errores
-Actualmente, la implementación para manejar errores se considera deficiente y necesita mejoras. Se requiere un análisis cuidadoso y mejoras en esta área para asegurar un manejo robusto de errores en toda la aplicación.
+---
 
 
+¡Bienvenido al repositorio del proyecto Tenpo Challenge! Este proyecto está desarrollado utilizando Spring.
 
 Mejoras Obligatorias
-Mock: el mock actualmente esta hecho con mockachino, se debe implementar 
+---
+Mock: El mock actualmente está hecho con mockachino (https://www.mockachino.com/spaces/428acb5c-9f6a-45) donde se pueden probar los errores, se debe implementar Wiremock
 
 Integración de JWT: Implementar JWT (JSON Web Tokens) para una autenticación y autorización seguras.
 
@@ -44,33 +45,37 @@ Mejora de la Seguridad: Asegurar que la información sensible, como las contrase
 
 Integración de Micrometer y Grafana: Integrar Micrometer con Grafana para un monitoreo avanzado y la recopilación de métricas.
 
-Builders: implementar builders en vez de constructores
+Builders: Implementar builders en vez de constructores.
 
+Manejo de Errores: Actualmente, la implementación para manejar errores se considera deficiente y necesita mejoras. Se requiere un análisis cuidadoso y mejoras en esta área para asegurar un manejo robusto de errores en toda la aplicación.
 
 Mejoras Opcionales
-
+--
 Integración de Lombok: Considerar integrar Lombok para reducir el código repetitivo en el proyecto.
+
 MapStruct: Explorar la posibilidad de utilizar MapStruct para simplificar el mapeo.
 
-Documentación con Swagger
-La documentacion de swagger se encuentra en construccion, puede verlo con la configuracion basica en:  http://localhost:8080/swagger-ui/index.html
+Documentación con Swagger: La documentación de Swagger se encuentra en construcción, puedes verla con la configuración básica en: http://localhost:8080/swagger-ui/index.html
 
 Dependencias
+--
 El proyecto actualmente depende de las siguientes librerías:
 
-java 17
+Java 17
 Gson
 Spring Framework 3
 PostgreSQL
 springdoc
-redisson
-bucket4j
+Redisson
+Bucket4j
+Arquitectura
 
 
 Arquitectura
+--
 El proyecto sigue una clara separación de responsabilidades con los siguientes componentes:
 
-Controlador (Controller): Responsable de manejar las solicitudes entrantes y mappear respuestas.
+Controlador (Controller): Responsable de manejar las solicitudes entrantes y mapear respuestas.
 
 Servicio (Service): Contiene la lógica del negocio y se encarga de procesar y validar datos.
 
@@ -81,100 +86,113 @@ Configuración (Configuration): Administra la configuración de las dependencias
 
 
 
-Configuración de Redis
-Se encuentra con la configuracion basica, posiblemente como este no funcione para ejecutar varias instancias y que funcione correctamente el rate limiter.
 
+Ejecutar el proyecto localmente
+Ejecutar JAVA localmente:
 
-
-
-
---Ejecutar el proyecto localmente:
-
-- Ejecutar JAVA localmente
-
-primero hay que tener instalado java 17 e intelij.
-
-clonar el repositorio https://github.com/papamasro/taxChallenge:
-
-git clone https://github.com/papamasro/taxChallenge.git
-
-abrir el proyecto y configurar las variables de entorno
-
+Primero, asegúrate de tener instalado Java 17 y IntelliJ.
+Clona el repositorio https://github.com/papamasro/taxChallenge.
+Abre el proyecto y configura las variables de entorno:
+~~~
 DATABASE_URL=jdbc:postgresql://localhost:5432/postgres;DATABASE_USERNAME=postgres;DATABASE_PASSWORD=mysecretpassword
+~~~
+Ejecutar PostgreSQL localmente:
 
-- Ejecutar Postgre localmente
 Para ejecutar una base de datos PostgreSQL de forma local, puedes utilizar el siguiente comando de Docker:
+~~~
 docker run -p 5432:5432 --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres
+~~~
+Ejecutar Redis localmente:
 
-- Ejecutar Redis localmente
 Para ejecutar Redis en un contenedor de Docker de forma local, puedes utilizar el siguiente comando:
+~~~
 docker run -d -p 6379:6379 --name myredis --network redisnet redis
+~~~
+Ejecutar el proyecto en Docker
+El servicio dockerizado se encuentra alojado en Docker-Hub. Para descargar la imagen, utiliza esta instrucción:
 
---Ejecutar el proyecto en docker:
-
-El servicio dockerizado se encuentra alojado en Docker-Hub. Bajarse la imagen mediante esta instrucción.
-
+~~~
 docker pull papamas/app-latest:latest
+~~~
+Para correr el servicio mediante docker-compose, desde la carpeta raíz del proyecto, utiliza este comando:
 
-Correr el servicio mediante docker-compose, desde la carpeta raíz del proyecto.
-
+~~~
 docker-compose up --build
+~~~
 
+A tener en cuenta
+--
+Configuración de Redis
+La configuración actual es básica, posiblemente esto no funcione para ejecutar varias instancias y que funcione correctamente el rate limiter.
 
---Si tenes problemas con redis, seguramente tengas que cambiar una configuracion en application.properties
-spring.data.redis.host=redis cambiar por spring.data.redis.host=localhost o viceversa
+Si tienes problemas con Redis, seguramente tengas que cambiar una configuración en application.properties.
+Cambia spring.data.redis.host=redis por spring.data.redis.host=localhost o viceversa.
 
 
 
 API
-
+--
 Login
-Crear usuario
+--
+Crear usuario:
+--
 
-método : POST
-url : {{url}}/createUser
+Método: POST
+URL: {{url}}/createUser
+
+Respuesta:
+~~~
 {
 "user": "123",
 "id": 1
 }
+~~~
+Login:
+--
+el login no tiene la logica de manejar passwords, solo se utiliza el id para el rate limiter.
 
-login
+Método: Get
+URL: {{url}}/login
 
-método : POST
-url : {{url}}/createUser
+Respuesta:
+~~~
 {
 "user": "123",
 "id": 1
 }
-
-
-
+~~~
 Ejecutar cálculo
-Ejecuta el cálculo pedido.
+--
 
-método : POST
-url : {{url}}/calculateTax
-header: userId:{{id}} es obligatorio este valor, y es el que va a tomar en cuenta el rate limiter para limitar el servicio, este solo servicio posee rate limiter
+Método: POST
+
+URL: {{url}}/calculateTax
+
+Cabecera: userId:{{userId}} 
+
+(Es obligatorio este valor, y es el que va a tomar en cuenta el rate limiter para limitar el servicio. Este servicio posee rate limiter)
+
+Respuesta:
+~~~
 {
-"first" : 15,
-"second" : 10
+"first": 15,
+"second": 10
 }
-
-
+~~~
 Historial de llamadas
-Se obtienen los llamados entrantes  en la app. Incluye paginación.
+--
+Se obtienen los llamados entrantes en la app. Incluye paginación.
 
-método : GET
-url : {{url}}/history?size=10&page=0
-Response:
+Método: GET
 
-http status : 200
+URL: {{url}}/history?size=10&page=0
+
+Respuesta:
+~~~
 {
-
 "pageNumber": 0,
-"pageSize": 10
+"pageSize": 10,
 "totalPages": 1,
 "result": "[{\"id\":6,\"endpoint\":\"calculateTax\",\"timestamp\":\"2023-08-01 05:59:43.167\",\"statusCode\":200,\"response\":\"{\\\"date\\\":\\\"2023-08-01 05:59:43.166\\\",\\\"tax\\\":0.1,\\\"result\\\":4.4}\"},{\"id\":5,\"endpoint\":\"getExternalTax\",\"timestamp\":\"2023-08-01 05:59:43.166\",\"statusCode\":200,\"response\":\"{\\\"timestamp\\\":\\\"196108043215\\\",\\\"name\\\":\\\"IIGG\\\",\\\"tax\\\":0.1}\"},{\"id\":4,\"endpoint\":\"calculateTax\",\"timestamp\":\"2023-08-01 05:59:38.871\",\"statusCode\":200,\"response\":\"{\\\"date\\\":\\\"2023-08-01 05:59:38.87\\\",\\\"tax\\\":0.1,\\\"result\\\":1.1}\"},{\"id\":3,\"endpoint\":\"getExternalTax\",\"timestamp\":\"2023-08-01 05:59:38.87\",\"statusCode\":200,\"response\":\"{\\\"timestamp\\\":\\\"196108043215\\\",\\\"name\\\":\\\"IIGG\\\",\\\"tax\\\":0.1}\"},{\"id\":1,\"endpoint\":\"getExternalTax\",\"timestamp\":\"2023-08-01 05:59:37.409\",\"statusCode\":200,\"response\":\"{\\\"timestamp\\\":\\\"196108043215\\\",\\\"name\\\":\\\"IIGG\\\",\\\"tax\\\":0.1}\"},{\"id\":2,\"endpoint\":\"calculateTax\",\"timestamp\":\"2023-08-01 05:59:37.409\",\"statusCode\":200,\"response\":\"{\\\"date\\\":\\\"2023-08-01 05:59:37.394\\\",\\\"tax\\\":0.1,\\\"result\\\":1.1}\"}]"
 }
-
-}
+~~~
