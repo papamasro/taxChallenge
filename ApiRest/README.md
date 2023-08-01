@@ -112,7 +112,7 @@ Ejecutar el proyecto en Docker
 El servicio dockerizado se encuentra alojado en Docker-Hub. Para descargar la imagen, utiliza esta instrucción:
 
 ~~~
-docker pull papamas/app-latest:latest
+docker pull papamas/demo-java_app:1.0.0
 ~~~
 Para correr el servicio mediante docker-compose, desde la carpeta raíz del proyecto, utiliza este comando:
 
