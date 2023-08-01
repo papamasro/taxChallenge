@@ -3,7 +3,7 @@ package com.example.demo.service.impl;
 import com.example.demo.exception.NoTaxValueException;
 import com.example.demo.model.external.TaxesServiceRequest;
 import com.example.demo.model.external.TaxesServiceResponse;
-import com.example.demo.model.jpa.TaxesPercentCache;
+import com.example.demo.model.entity.TaxesPercentCacheEntity;
 import com.example.demo.model.services.calculate.CalculateTaxResponse;
 import com.example.demo.model.services.calculate.TaxValueRequest;
 import com.example.demo.service.Calculator;
@@ -46,9 +46,9 @@ public class CalculatorService implements Calculator {
             });
 
             logger.info("saving taxes in cache");
-            TaxesPercentCache taxesPercentCache = new TaxesPercentCache(responseCharge.getName(), responseCharge.getTimestamp(), responseCharge.getTax());
+            TaxesPercentCacheEntity taxesPercentCacheEntity = new TaxesPercentCacheEntity(responseCharge.getName(), responseCharge.getTimestamp(), responseCharge.getTax());
             CompletableFuture.runAsync(() -> {
-                taxesCacheService.saveTaxesCache(taxesPercentCache); //TODO if fail redis, the service will not work because this, this is a posible solution (may not the best) same problem in catch
+                taxesCacheService.saveTaxesCache(taxesPercentCacheEntity); //TODO if fail redis, the service will not work because this, this is a posible solution (may not the best) same problem in catch
             });
             return responseCharge.getTax();
         } catch (Exception ex) {
@@ -58,7 +58,7 @@ public class CalculatorService implements Calculator {
                 loggingEventService.saveCallHistory("getExternalTax", 0, ex.getMessage()); //TODO RESOLVE STATUS CODE
             });
             logger.info("trying to get taxes from cache");
-            Optional<TaxesPercentCache> percentageFromCache = taxesCacheService.getLastTaxesFromCache(name); //TODO if fail redis, the service will not work because this, posible solution is adding completabler future with then
+            Optional<TaxesPercentCacheEntity> percentageFromCache = taxesCacheService.getLastTaxesFromCache(name); //TODO if fail redis, the service will not work because this, posible solution is adding completabler future with then
             if (percentageFromCache.isPresent()) {
                 logger.info("success getting taxes from cache");
                 return percentageFromCache.get().getValue();
@@ -77,7 +77,7 @@ public class CalculatorService implements Calculator {
         Gson gson = new Gson();
         CalculateTaxResponse calculateTaxResponse = new CalculateTaxResponse(DateFormatter.getStringDate(), externalTaxes, resultWithCharges);
         CompletableFuture.runAsync(() -> {
-            loggingEventService.saveCallHistory("calculateTax", 200, gson.toJson(calculateTaxResponse));
+            loggingEventService.saveCallHistory("calculateTax", 200, gson.toJson(calculateTaxResponse)); //TODO MOVE TO CONTROLLER
         });
         return calculateTaxResponse;
     }

@@ -1,11 +1,11 @@
-package com.example.demo.model.jpa;
+package com.example.demo.model.entity;
 
 import jakarta.persistence.*;
 
 
 @Entity
 @Table(name = "call_history")
-public class CallHistory {
+public class CallHistoryEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,10 +22,10 @@ public class CallHistory {
     @Column(name = "response")
     private String response;
 
-    public CallHistory() {
+    public CallHistoryEntity() {
     }
 
-    public CallHistory(Long id, String endpoint, String timestamp, Integer statusCode, String response) {
+    public CallHistoryEntity(Long id, String endpoint, String timestamp, Integer statusCode, String response) {
         this.id = id;
         this.endpoint = endpoint;
         this.timestamp = timestamp;

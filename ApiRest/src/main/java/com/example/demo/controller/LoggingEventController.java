@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.jpa.CallHistory;
+import com.example.demo.model.entity.CallHistoryEntity;
 import com.example.demo.model.services.logger.LoggerEventResponse;
 import com.example.demo.service.impl.api.LoggingEventService;
 import com.google.gson.Gson;
@@ -21,7 +21,7 @@ public class LoggingEventController {
     @GetMapping("history")
     public ResponseEntity<LoggerEventResponse> getCallHistory(@RequestParam(defaultValue = "0") int page,
                                                               @RequestParam(defaultValue = "10") int size) {
-        Page<CallHistory> historyPage = loggingEventService.getSuccessCallHistory(page, size);
+        Page<CallHistoryEntity> historyPage = loggingEventService.getSuccessCallHistory(page, size);
         LoggerEventResponse loggerEventResponse = new LoggerEventResponse(gson.toJson(historyPage.getContent()), historyPage.getNumber(), historyPage.getPageable().getPageSize(), historyPage.getTotalPages());
         return ResponseEntity.ok(loggerEventResponse);
     }

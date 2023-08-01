@@ -1,4 +1,4 @@
-package com.example.demo.model.jpa;
+package com.example.demo.model.entity;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,8 +9,8 @@ import org.springframework.data.redis.core.index.Indexed;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-@RedisHash(value = "TAXES", timeToLive = 1800)
-public class TaxesPercentCache implements Serializable {
+@RedisHash(value = "TAXES", timeToLive = 1800) //TODO MOVE TTL TO APLICATION PROPERTY
+public class TaxesPercentCacheEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,13 +20,13 @@ public class TaxesPercentCache implements Serializable {
     private String timestamp;
     private BigDecimal value;
 
-    public TaxesPercentCache(String name, String timestamp, BigDecimal value) {
+    public TaxesPercentCacheEntity(String name, String timestamp, BigDecimal value) {
         this.name = name;
         this.timestamp = timestamp;
         this.value = value;
     }
 
-    public TaxesPercentCache() {
+    public TaxesPercentCacheEntity() {
     }
 
     public Integer getId() {

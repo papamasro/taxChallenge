@@ -1,13 +1,13 @@
 package com.example.demo.repository;
 
-import com.example.demo.model.jpa.TaxesPercentCache;
+import com.example.demo.model.entity.TaxesPercentCacheEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TaxesRedisRepository extends CrudRepository<TaxesPercentCache, String> {
-    TaxesPercentCache findByDate(String date);
+public interface TaxesRedisRepository extends CrudRepository<TaxesPercentCacheEntity, String> {
+    TaxesPercentCacheEntity findByDate(String date);
 
-    TaxesPercentCache findByName(String name);
+    TaxesPercentCacheEntity findByName(String name);
 
 }

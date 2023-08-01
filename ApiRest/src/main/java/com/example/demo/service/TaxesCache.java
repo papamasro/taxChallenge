@@ -1,10 +1,10 @@
 package com.example.demo.service;
 
-import com.example.demo.model.jpa.TaxesPercentCache;
+import com.example.demo.model.entity.TaxesPercentCacheEntity;
 
 import java.util.Optional;
 
 public interface TaxesCache {
-    Optional<TaxesPercentCache> getLastTaxesFromCache(String name);
-    void saveTaxesCache(TaxesPercentCache tax);
+    Optional<TaxesPercentCacheEntity> getLastTaxesFromCache(String name);
+    void saveTaxesCache(TaxesPercentCacheEntity tax);
 }

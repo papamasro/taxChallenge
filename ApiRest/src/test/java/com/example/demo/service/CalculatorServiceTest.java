@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.exception.NoTaxValueException;
-import com.example.demo.model.jpa.TaxesPercentCache;
+import com.example.demo.model.entity.TaxesPercentCacheEntity;
 import com.example.demo.model.services.calculate.CalculateTaxResponse;
 import com.example.demo.model.services.calculate.TaxValueRequest;
 import com.example.demo.model.external.TaxesServiceResponse;
@@ -66,8 +66,8 @@ public class CalculatorServiceTest {
         TaxValueRequest taxValueRequest = new TaxValueRequest(taxName, firstNumber, secondNumber);
         when(taxRepository.getTaxes(any())).thenReturn(null);
 
-        TaxesPercentCache taxesPercentCache = new TaxesPercentCache(taxName, DateFormatter.getStringDate(), externalTaxes);
-        when(taxesCacheService.getLastTaxesFromCache(taxName)).thenReturn(Optional.of(taxesPercentCache));
+        TaxesPercentCacheEntity taxesPercentCacheEntity = new TaxesPercentCacheEntity(taxName, DateFormatter.getStringDate(), externalTaxes);
+        when(taxesCacheService.getLastTaxesFromCache(taxName)).thenReturn(Optional.of(taxesPercentCacheEntity));
 
         CalculateTaxResponse result = calculatorService.calculateTax(taxValueRequest);
 

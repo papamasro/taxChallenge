@@ -1,6 +1,6 @@
 package com.example.demo.service.api;
 
-import com.example.demo.model.jpa.TaxesPercentCache;
+import com.example.demo.model.entity.TaxesPercentCacheEntity;
 import com.example.demo.repository.TaxesRedisRepository;
 import com.example.demo.service.impl.api.TaxesCacheService;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +15,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class TaxesPercentCacheServiceTest {
+public class TaxesPercentCacheEntityServiceTest {
 
     @Mock
     private TaxesRedisRepository taxesRedisRepository;
@@ -36,13 +36,13 @@ public class TaxesPercentCacheServiceTest {
     BigDecimal expectedResult = new BigDecimal(33.0);
     @Test
     public void testGetLastTaxesFromCache() {
-        TaxesPercentCache expectedTaxesPercentCache = new TaxesPercentCache(taxName,timestamp,externalTaxes);
+        TaxesPercentCacheEntity expectedTaxesPercentCacheEntity = new TaxesPercentCacheEntity(taxName,timestamp,externalTaxes);
 
-        when(taxesRedisRepository.findByName(taxName)).thenReturn(expectedTaxesPercentCache);
+        when(taxesRedisRepository.findByName(taxName)).thenReturn(expectedTaxesPercentCacheEntity);
 
-        Optional<TaxesPercentCache> result = taxesCacheService.getLastTaxesFromCache(taxName);
+        Optional<TaxesPercentCacheEntity> result = taxesCacheService.getLastTaxesFromCache(taxName);
 
-        assertEquals(expectedTaxesPercentCache, result.orElse(null));
+        assertEquals(expectedTaxesPercentCacheEntity, result.orElse(null));
 
         verify(taxesRedisRepository, times(1)).findByName(taxName);
     }
@@ -52,7 +52,7 @@ public class TaxesPercentCacheServiceTest {
 
         when(taxesRedisRepository.findByName(taxName)).thenReturn(null);
 
-        Optional<TaxesPercentCache> result = taxesCacheService.getLastTaxesFromCache(taxName);
+        Optional<TaxesPercentCacheEntity> result = taxesCacheService.getLastTaxesFromCache(taxName);
 
         assertEquals(null, result.orElse(null));
 
@@ -61,10 +61,10 @@ public class TaxesPercentCacheServiceTest {
 
     @Test
     public void testSaveTaxesCache() {
-        TaxesPercentCache taxesPercentCache = new TaxesPercentCache(taxName,timestamp,externalTaxes);
+        TaxesPercentCacheEntity taxesPercentCacheEntity = new TaxesPercentCacheEntity(taxName,timestamp,externalTaxes);
 
-        taxesCacheService.saveTaxesCache(taxesPercentCache);
+        taxesCacheService.saveTaxesCache(taxesPercentCacheEntity);
 
-        verify(taxesRedisRepository, times(1)).save(taxesPercentCache);
+        verify(taxesRedisRepository, times(1)).save(taxesPercentCacheEntity);
     }
 }

@@ -1,22 +1,15 @@
 package com.example.demo.service.api;
 
-import com.example.demo.model.jpa.CallHistory;
 import com.example.demo.repository.HistoryPagRepository;
 import com.example.demo.repository.HistoryRepository;
 import com.example.demo.service.impl.api.LoggingEventService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.data.domain.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.*;
 
 public class LoggingEventServiceTest {
 

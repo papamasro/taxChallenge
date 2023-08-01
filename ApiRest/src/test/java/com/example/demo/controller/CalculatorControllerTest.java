@@ -46,7 +46,7 @@ public class CalculatorControllerTest {
 
         when(calculatorService.calculateTax(taxValueRequest)).thenReturn(calculateTaxResponse);
 
-        ResponseEntity<CalculateTaxResponse> response = calculatorController.calculateTax(calculateTaxRequest);
+        ResponseEntity<CalculateTaxResponse> response = calculatorController.calculateTax(1,calculateTaxRequest);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
