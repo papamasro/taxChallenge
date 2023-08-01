@@ -11,7 +11,28 @@ import org.mockito.MockitoAnnotations;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class LoggingEventServiceTest {
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+import com.example.demo.model.entity.CallHistoryEntity;
+import com.example.demo.repository.HistoryPagRepository;
+import com.example.demo.repository.HistoryRepository;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.slf4j.Logger;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@ExtendWith(MockitoExtension.class)
+class LoggingEventServiceTest {
 
     @Mock
     private HistoryPagRepository callHistoryPagRepository;
@@ -19,67 +40,33 @@ public class LoggingEventServiceTest {
     @Mock
     private HistoryRepository historyRepository;
 
+    @Mock
+    private Logger logger;
+
     @InjectMocks
     private LoggingEventService loggingEventService;
 
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
-
-
-    /*
     @Test
-    public void testSaveCallHistory() {
+    void testGetSuccessCallHistory() {
         // Arrange
-        String endpoint = "testEndpoint";
-        int statusCode = 200;
-        String response = "testResponse";
+        int page = 0;
+        int size = 10;
+        List<CallHistoryEntity> callHistoryEntities = new ArrayList<>();
+        callHistoryEntities.add(new CallHistoryEntity(/* ... */));
+        // Add more call history entities as needed
+
+        Page<CallHistoryEntity> callHistoryPage = mock(Page.class);
+     //   when(callHistoryPage.getContent()).thenReturn(callHistoryEntities);
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by("timestamp").descending());
+        when(callHistoryPagRepository.findAllByStatusCode(200, pageable)).thenReturn(callHistoryPage);
 
         // Act
-        loggingEventService.saveCallHistory(endpoint, statusCode, response);
+        Page<CallHistoryEntity> resultPage = loggingEventService.getSuccessCallHistory(page, size);
 
         // Assert
-        verify(historyRepository, times(1)).save(any(CallHistory.class));
+        assertNotNull(resultPage);
+        assertEquals(callHistoryPage, resultPage);
+        // You can add more assertions based on your implementation and expected output
     }
-
-    @Test
-    public void testGetCallHistory() {
-        // Arrange
-        int page = 0;
-        int size = 10;
-        List<CallHistory> callHistoryList = new ArrayList<>();
-        callHistoryList.add(new CallHistory());
-        Page<CallHistory> pageResult = new PageImpl<>(callHistoryList);
-
-        Pageable pageable = PageRequest.of(page, size, Sort.by("timestamp").descending());
-        when(callHistoryPagRepository.findAll(pageable)).thenReturn(pageResult);
-
-        Page<CallHistory> result = loggingEventService.getSuccessCallHistory(page, size);
-
-        assertEquals(pageResult, result);
-
-        verify(callHistoryPagRepository, times(1)).findAll(pageable);
-        verify(historyRepository, times(1)).save(any(CallHistory.class));
-    }
-
-    @Test
-    public void testGetCallHistoryWithEmptyPage() {
-        // Arrange
-        int page = 0;
-        int size = 10;
-        List<CallHistory> callHistoryList = new ArrayList<>();
-        Page<CallHistory> emptyPage = new PageImpl<>(callHistoryList);
-
-        Pageable pageable = PageRequest.of(page, size, Sort.by("timestamp").descending());
-        when(callHistoryPagRepository.findAll(pageable)).thenReturn(emptyPage);
-
-        Page<CallHistory> result = loggingEventService.getSuccessCallHistory(page, size);
-
-        assertTrue(result.isEmpty());
-
-        verify(callHistoryPagRepository, times(1)).findAll(pageable);
-        verify(historyRepository, times(1)).save(any(CallHistory.class));
-    }
-    */
 }

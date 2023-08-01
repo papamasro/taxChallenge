@@ -1,24 +1,32 @@
 package com.example.demo.controller;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+import com.example.demo.controller.CalculatorController;
+import com.example.demo.exception.TooManyRequestException;
 import com.example.demo.model.services.calculate.CalculateTaxRequest;
 import com.example.demo.model.services.calculate.CalculateTaxResponse;
 import com.example.demo.model.services.calculate.TaxValueRequest;
 import com.example.demo.service.impl.CalculatorService;
-import com.example.demo.util.DateFormatter;
+import com.example.demo.service.impl.api.RateLimiterServices;
+import io.github.bucket4j.Bucket;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+@ExtendWith(MockitoExtension.class)
+class CalculatorControllerTest {
 
-public class CalculatorControllerTest {
+    @Mock
+    private RateLimiterServices rateLimiter;
 
     @Mock
     private CalculatorService calculatorService;
@@ -26,31 +34,50 @@ public class CalculatorControllerTest {
     @InjectMocks
     private CalculatorController calculatorController;
 
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
 
-    BigDecimal first = new BigDecimal("10.0");
-    BigDecimal second = new BigDecimal("20.0");
-    BigDecimal tax = new BigDecimal("0.10");
-    BigDecimal expectedTaxValue = new BigDecimal("33.0");
+    String taxName = "IIGG";
+    String timestamp = "12345";
+
+    Integer userId = 123;
+    BigDecimal firstNumber = new BigDecimal(10.0);
+    BigDecimal secondNumber = new BigDecimal(20.0);
+    BigDecimal externalTaxes = new BigDecimal(0.10);
+    BigDecimal expectedResult = new BigDecimal(33.0);
 
     @Test
-    public void testCalculateTax() {
+    void testCalculateTaxSuccess() {
+        // Arrange
+        CalculateTaxRequest calculateTaxRequest = new CalculateTaxRequest(firstNumber, secondNumber);
+        TaxValueRequest taxValueRequest = new TaxValueRequest("IIGG", calculateTaxRequest.getFirst(), calculateTaxRequest.getSecond());
+        CalculateTaxResponse calculatedResponse = new CalculateTaxResponse(timestamp, externalTaxes, expectedResult);
 
+        Bucket bucketMock = mock(Bucket.class);
+        when(rateLimiter.resolveBucket(userId.toString())).thenReturn(bucketMock);
+        when(bucketMock.tryConsume(1)).thenReturn(true);
 
-        CalculateTaxRequest calculateTaxRequest = new CalculateTaxRequest(first, second);
-        TaxValueRequest taxValueRequest = new TaxValueRequest("IIGG", first, second);
-        CalculateTaxResponse calculateTaxResponse = new CalculateTaxResponse(DateFormatter.getStringDate(),tax,expectedTaxValue);
+        when(calculatorService.calculateTax(any(TaxValueRequest.class))).thenReturn(calculatedResponse);
 
-        when(calculatorService.calculateTax(taxValueRequest)).thenReturn(calculateTaxResponse);
+        // Act
+        ResponseEntity<CalculateTaxResponse> responseEntity = calculatorController.calculateTax(userId, calculateTaxRequest);
 
-        ResponseEntity<CalculateTaxResponse> response = calculatorController.calculateTax(1,calculateTaxRequest);
+        // Assert
+        assertEquals(200, responseEntity.getStatusCodeValue());
+        CalculateTaxResponse responseBody = responseEntity.getBody();
+        assertNotNull(responseBody);
+        assertEquals(calculatedResponse.getTax(), responseBody.getTax());
+    }
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+    @Test
+    void testCalculateTaxTooManyRequests() {
+        // Arrange
+        Integer userId = 1;
+        CalculateTaxRequest calculateTaxRequest = new CalculateTaxRequest(firstNumber, secondNumber);
 
-        // Verify that the calculatorService.calculateTax method was called with the correct argument
-     //   verify(calculatorService, times(1)).calculateTax(taxValueRequest);
+        Bucket bucketMock = mock(Bucket.class);
+        when(rateLimiter.resolveBucket(userId.toString())).thenReturn(bucketMock);
+        when(bucketMock.tryConsume(1)).thenReturn(false);
+
+        // Act & Assert
+        assertThrows(TooManyRequestException.class, () -> calculatorController.calculateTax(userId, calculateTaxRequest));
     }
 }

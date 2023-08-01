@@ -37,7 +37,7 @@ public class LoggingEventService implements LoggingEvent {
         logger.info("getting history calls from BD");
         Pageable pageable = PageRequest.of(page, size, Sort.by("timestamp").descending());
         Page<CallHistoryEntity> callHistoryPage = callHistoryPagRepository.findAllByStatusCode(200,pageable);
-        saveCallHistory("getCallHistory", 200, callHistoryPage.toString());
+        saveCallHistory("getCallHistory", 200, callHistoryPage.toString()); //TODO: RESPONSE TOO LONG TO SAVE
         logger.info("success getting history calls of BD");
         return callHistoryPage;
     }

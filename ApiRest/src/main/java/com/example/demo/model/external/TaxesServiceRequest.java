@@ -12,6 +12,9 @@ public class TaxesServiceRequest {
         this.taxesName = taxesName;
     }
 
+    public TaxesServiceRequest() {
+    }
+
     public String getTaxesName() {
         return taxesName;
     }

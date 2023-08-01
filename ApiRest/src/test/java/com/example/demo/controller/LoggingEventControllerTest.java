@@ -1,47 +1,65 @@
 package com.example.demo.controller;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+import com.example.demo.model.entity.CallHistoryEntity;
+import com.example.demo.model.services.logger.LoggerEventResponse;
+import com.example.demo.repository.HistoryPagRepository;
 import com.example.demo.service.impl.api.LoggingEventService;
-import com.google.gson.Gson;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 
-public class LoggingEventControllerTest {
+import java.util.ArrayList;
+import java.util.List;
 
+@ExtendWith(MockitoExtension.class)
+class LoggingEventControllerTest {
     @Mock
     private LoggingEventService loggingEventService;
 
+
+    @Mock
+    private HistoryPagRepository callHistoryPagRepository;
     @InjectMocks
     private LoggingEventController loggingEventController;
-
-    private Gson gson;
-
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-        gson = new Gson();
-    }
-
+/*
     @Test
-    public void testGetCallHistory() {
-        /* TODO: NOT WORKING PAGE TEST
+    void testGetCallHistory() {
+        // Arrange
         int page = 0;
         int size = 10;
-        List<CallHistory> callHistoryList = new ArrayList<>();
-        callHistoryList.add(new CallHistory(1l,"","",200,""));
-        Page<CallHistory> pageResult = new PageImpl<>(callHistoryList);
+        List<CallHistoryEntity> callHistoryEntities = new ArrayList<>();
+        callHistoryEntities.add(new CallHistoryEntity());
+        // Add more call history entities as needed
 
-        when(loggingEventService.getCallHistory(page, size)).thenReturn(pageResult);
+        Page<CallHistoryEntity> historyPage = mock(Page.class);
+        when(historyPage.getContent()).thenReturn(callHistoryEntities);
 
-        ResponseEntity<LoggerEventResponse> response = loggingEventController.getCallHistory(page, size);
+        // Create an instance of Pageable using PageRequest
+        Pageable pageable = PageRequest.of(page, size, Sort.by("timestamp").descending());
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-       assertEquals(gson.toJson(callHistoryList), response.getBody().getResult());
+        // Simulate the behavior of findAllByStatusCode with the created Pageable
+        when(callHistoryPagRepository.findAllByStatusCode(200, pageable)).thenReturn(historyPage);
 
-        verify(loggingEventService, times(1)).getCallHistory(page, size);
+        // Act
+        ResponseEntity<LoggerEventResponse> responseEntity = loggingEventController.getCallHistory(page, size);
 
-         */
+        // Assert
+        assertEquals(200, responseEntity.getStatusCodeValue());
+        LoggerEventResponse loggerEventResponse = responseEntity.getBody();
+        assertNotNull(loggerEventResponse);
+        assertEquals(1, loggerEventResponse.getPageNumber());
+        assertEquals(size, loggerEventResponse.getPageSize());
+        assertEquals(1, loggerEventResponse.getTotalPages());
     }
+    */
 }

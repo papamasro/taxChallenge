@@ -50,6 +50,7 @@ public class CalculatorService implements Calculator {
             CompletableFuture.runAsync(() -> {
                 taxesCacheService.saveTaxesCache(taxesPercentCacheEntity); //TODO if fail redis, the service will not work because this, this is a posible solution (may not the best) same problem in catch
             });
+
             return responseCharge.getTax();
         } catch (Exception ex) {
 
