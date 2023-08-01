@@ -1,12 +1,18 @@
 Requerimientos
+--
 Debes desarrollar una API REST en Spring Boot utilizando Java 11 o superior, con las siguientes funcionalidades:
+
 a) Debe contener un servicio llamado api-rest que reciba 2 números, los sume, y le aplique un porcentaje adquirido de un servicio externo. Por ejemplo, si el servicio recibe 5 y 5 como valores, y el porcentaje devuelto por el servicio externo es 10, entonces (5 + 5) + 10% = 11.
 Consideraciones:
 
 El servicio externo puede ser un mock y debe devolver el porcentaje sumado.
+
 El porcentaje devuelto por el servicio externo no cambiará en 30 minutos.
+
 Si el servicio externo falla, se debe devolver el último valor retornado. Si no hay valor, la API debe retornar un error.
+
 Si el servicio falla, se puede reintentar hasta 3 veces.
+
 b) Historial de todos los llamados a todos los endpoints, junto con la respuesta en caso de haber sido exitoso. Responder en JSON, con datos paginados. El guardado del historial de llamadas no debe sumar tiempo al servicio invocado y, en caso de falla, no debe impactar el llamado al servicio principal.
 
 c) La API soporta recibir como máximo 3 RPM (request por minuto). En caso de superar ese umbral, debe retornar un error con el código HTTP y mensaje adecuado.
@@ -34,28 +40,6 @@ Introducción
 
 
 ¡Bienvenido al repositorio del proyecto Tenpo Challenge! Este proyecto está desarrollado utilizando Spring.
-
-Mejoras Obligatorias
----
-Mock: El mock actualmente está hecho con mockachino (https://www.mockachino.com/spaces/428acb5c-9f6a-45) donde se pueden probar los errores, se debe implementar Wiremock
-
-Integración de JWT: Implementar JWT (JSON Web Tokens) para una autenticación y autorización seguras.
-
-Mejora de la Seguridad: Asegurar que la información sensible, como las contraseñas de los usuarios y las URL de las bases de datos, no estén expuestas ni se almacenen en texto plano.
-
-Integración de Micrometer y Grafana: Integrar Micrometer con Grafana para un monitoreo avanzado y la recopilación de métricas.
-
-Builders: Implementar builders en vez de constructores.
-
-Manejo de Errores: Actualmente, la implementación para manejar errores se considera deficiente y necesita mejoras. Se requiere un análisis cuidadoso y mejoras en esta área para asegurar un manejo robusto de errores en toda la aplicación.
-
-Mejoras Opcionales
---
-Integración de Lombok: Considerar integrar Lombok para reducir el código repetitivo en el proyecto.
-
-MapStruct: Explorar la posibilidad de utilizar MapStruct para simplificar el mapeo.
-
-Documentación con Swagger: La documentación de Swagger se encuentra en construcción, puedes verla con la configuración básica en: http://localhost:8080/swagger-ui/index.html
 
 Dependencias
 --
@@ -196,3 +180,25 @@ Respuesta:
 "result": "[{\"id\":6,\"endpoint\":\"calculateTax\",\"timestamp\":\"2023-08-01 05:59:43.167\",\"statusCode\":200,\"response\":\"{\\\"date\\\":\\\"2023-08-01 05:59:43.166\\\",\\\"tax\\\":0.1,\\\"result\\\":4.4}\"},{\"id\":5,\"endpoint\":\"getExternalTax\",\"timestamp\":\"2023-08-01 05:59:43.166\",\"statusCode\":200,\"response\":\"{\\\"timestamp\\\":\\\"196108043215\\\",\\\"name\\\":\\\"IIGG\\\",\\\"tax\\\":0.1}\"},{\"id\":4,\"endpoint\":\"calculateTax\",\"timestamp\":\"2023-08-01 05:59:38.871\",\"statusCode\":200,\"response\":\"{\\\"date\\\":\\\"2023-08-01 05:59:38.87\\\",\\\"tax\\\":0.1,\\\"result\\\":1.1}\"},{\"id\":3,\"endpoint\":\"getExternalTax\",\"timestamp\":\"2023-08-01 05:59:38.87\",\"statusCode\":200,\"response\":\"{\\\"timestamp\\\":\\\"196108043215\\\",\\\"name\\\":\\\"IIGG\\\",\\\"tax\\\":0.1}\"},{\"id\":1,\"endpoint\":\"getExternalTax\",\"timestamp\":\"2023-08-01 05:59:37.409\",\"statusCode\":200,\"response\":\"{\\\"timestamp\\\":\\\"196108043215\\\",\\\"name\\\":\\\"IIGG\\\",\\\"tax\\\":0.1}\"},{\"id\":2,\"endpoint\":\"calculateTax\",\"timestamp\":\"2023-08-01 05:59:37.409\",\"statusCode\":200,\"response\":\"{\\\"date\\\":\\\"2023-08-01 05:59:37.394\\\",\\\"tax\\\":0.1,\\\"result\\\":1.1}\"}]"
 }
 ~~~
+
+Mejoras Obligatorias
+---
+Mock: El mock actualmente está hecho con mockachino (https://www.mockachino.com/spaces/428acb5c-9f6a-45) donde se pueden probar los errores, se debe implementar Wiremock
+
+Integración de JWT: Implementar JWT (JSON Web Tokens) para una autenticación y autorización seguras.
+
+Mejora de la Seguridad: Asegurar que la información sensible, como las contraseñas de los usuarios y las URL de las bases de datos, no estén expuestas ni se almacenen en texto plano.
+
+Integración de Micrometer y Grafana: Integrar Micrometer con Grafana para un monitoreo avanzado y la recopilación de métricas.
+
+Builders: Implementar builders en vez de constructores.
+
+Manejo de Errores: Actualmente, la implementación para manejar errores se considera deficiente y necesita mejoras. Se requiere un análisis cuidadoso y mejoras en esta área para asegurar un manejo robusto de errores en toda la aplicación.
+
+Mejoras Opcionales
+--
+Integración de Lombok: Considerar integrar Lombok para reducir el código repetitivo en el proyecto.
+
+MapStruct: Explorar la posibilidad de utilizar MapStruct para simplificar el mapeo.
+
+Documentación con Swagger: La documentación de Swagger se encuentra en construcción, puedes verla con la configuración básica en: http://localhost:8080/swagger-ui/index.html
