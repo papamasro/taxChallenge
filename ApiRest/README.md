@@ -72,6 +72,8 @@ Configuración (Configuration): Administra la configuración de las dependencias
 
 
 Ejecutar el proyecto localmente
+--
+
 Ejecutar JAVA localmente:
 
 Primero, asegúrate de tener instalado Java 17 y IntelliJ.
@@ -93,6 +95,8 @@ Para ejecutar Redis en un contenedor de Docker de forma local, puedes utilizar e
 docker run -d -p 6379:6379 --name myredis --network redisnet redis
 ~~~
 Ejecutar el proyecto en Docker
+--
+
 El servicio dockerizado se encuentra alojado en Docker-Hub. Para descargar la imagen, utiliza esta instrucción:
 
 ~~~
@@ -103,16 +107,6 @@ Para correr el servicio mediante docker-compose, desde la carpeta raíz del proy
 ~~~
 docker-compose up --build
 ~~~
-
-A tener en cuenta
---
-Configuración de Redis
-La configuración actual es básica, posiblemente esto no funcione para ejecutar varias instancias y que funcione correctamente el rate limiter.
-
-Si tienes problemas con Redis, seguramente tengas que cambiar una configuración en application.properties.
-Cambia spring.data.redis.host=redis por spring.data.redis.host=localhost o viceversa.
-
-
 
 API
 --
@@ -180,6 +174,16 @@ Respuesta:
 "result": "[{\"id\":6,\"endpoint\":\"calculateTax\",\"timestamp\":\"2023-08-01 05:59:43.167\",\"statusCode\":200,\"response\":\"{\\\"date\\\":\\\"2023-08-01 05:59:43.166\\\",\\\"tax\\\":0.1,\\\"result\\\":4.4}\"},{\"id\":5,\"endpoint\":\"getExternalTax\",\"timestamp\":\"2023-08-01 05:59:43.166\",\"statusCode\":200,\"response\":\"{\\\"timestamp\\\":\\\"196108043215\\\",\\\"name\\\":\\\"IIGG\\\",\\\"tax\\\":0.1}\"},{\"id\":4,\"endpoint\":\"calculateTax\",\"timestamp\":\"2023-08-01 05:59:38.871\",\"statusCode\":200,\"response\":\"{\\\"date\\\":\\\"2023-08-01 05:59:38.87\\\",\\\"tax\\\":0.1,\\\"result\\\":1.1}\"},{\"id\":3,\"endpoint\":\"getExternalTax\",\"timestamp\":\"2023-08-01 05:59:38.87\",\"statusCode\":200,\"response\":\"{\\\"timestamp\\\":\\\"196108043215\\\",\\\"name\\\":\\\"IIGG\\\",\\\"tax\\\":0.1}\"},{\"id\":1,\"endpoint\":\"getExternalTax\",\"timestamp\":\"2023-08-01 05:59:37.409\",\"statusCode\":200,\"response\":\"{\\\"timestamp\\\":\\\"196108043215\\\",\\\"name\\\":\\\"IIGG\\\",\\\"tax\\\":0.1}\"},{\"id\":2,\"endpoint\":\"calculateTax\",\"timestamp\":\"2023-08-01 05:59:37.409\",\"statusCode\":200,\"response\":\"{\\\"date\\\":\\\"2023-08-01 05:59:37.394\\\",\\\"tax\\\":0.1,\\\"result\\\":1.1}\"}]"
 }
 ~~~
+
+
+A tener en cuenta
+--
+Configuración de Redis
+La configuración actual es básica, posiblemente esto no funcione para ejecutar varias instancias y que funcione correctamente el rate limiter.
+
+Si tienes problemas con Redis, seguramente tengas que cambiar una configuración en application.properties.
+Cambia spring.data.redis.host=redis por spring.data.redis.host=localhost o viceversa.
+
 
 Mejoras Obligatorias
 ---
