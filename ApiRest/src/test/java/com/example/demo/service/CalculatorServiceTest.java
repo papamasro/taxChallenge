@@ -91,4 +91,5 @@ public class CalculatorServiceTest {
         verify(taxRepository, times(1)).getTaxes(any());
         verify(taxesCacheService, times(1)).getLastTaxesFromCache(taxName);
     }
+
 }

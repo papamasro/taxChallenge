@@ -1,126 +1,176 @@
+
+Requerimientos
+1 - Debes desarrollar una API REST en Spring Boot utilizando java 11 o superior, con las siguientes funcionalidades:
+
+a) Debe contener un servicio llamado por api-rest que reciba 2 números, los sume, y le aplique una suba de un porcentaje que debe ser adquirido de un servicio externo (por ejemplo, si el servicio recibe 5 y 5 como valores, y el porcentaje devuelto por el servicio externo es 10, entonces (5 + 5) + 10% = 11). Se deben tener en cuenta las siguientes consideraciones:
+
+El servicio externo puede ser un mock, tiene que devolver el % sumado.
+Dado que ese % varía poco, podemos considerar que el valor que devuelve ese servicio no va cambiar por 30 minutos.
+Si el servicio externo falla, se debe devolver el último valor retornado. Si no hay valor, debe retornar un error la api.
+Si el servicio falla, se puede reintentar hasta 3 veces.
+b) Historial de todos los llamados a todos los endpoint junto con la respuesta en caso de haber sido exitoso. Responder en Json, con data paginada. El guardado del historial de llamadas no debe sumar tiempo al servicio invocado, y en caso de falla, no debe impactar el llamado al servicio principal.
+
+c) La api soporta recibir como máximo 3 rpm (request / minuto), en caso de superar ese umbral, debe retornar un error con el código http y mensaje adecuado.
+
+d) El historial se debe almacenar en una database PostgreSQL.
+
+e) Incluir errores http. Mensajes y descripciones para la serie 4XX.
+
+2 - Se deben incluir tests unitarios.
+
+3 - Esta API debe ser desplegada en un docker container. Este docker puede estar en un dockerhub público. La base de datos también debe correr en un contenedor docker. Recomendación usar docker compose
+
+4 - Debes agregar un Postman Collection o Swagger para que probemos tu API
+
+5 - Tu código debe estar disponible en un repositorio público, junto con las instrucciones de cómo desplegar el servicio y cómo utilizarlo.
+
+6 - Tener en cuenta que la aplicación funcionará de la forma de un sistema distribuido donde puede existir más de una réplica del servicio funcionando en paralelo.
+
+
 Introducción
-¡Bienvenido al repositorio del proyecto Tenpo Challenge! Este proyecto está desarrollado utilizando Spring y tiene como objetivo [proporcionar una breve descripción del propósito y los objetivos del proyecto].
+¡Bienvenido al repositorio del proyecto Tenpo Challenge! Este proyecto está desarrollado utilizando Spring!.
 
 Manejo de Errores
 Actualmente, la implementación para manejar errores se considera deficiente y necesita mejoras. Se requiere un análisis cuidadoso y mejoras en esta área para asegurar un manejo robusto de errores en toda la aplicación.
 
-Estado de Salud (Health Check)
-Para verificar el estado de salud de la aplicación, puedes utilizar el siguiente enlace: http://localhost:8080/actuator/health
 
-Mejoras
-El proyecto se beneficiaría con las siguientes mejoras:
 
 Mejoras Obligatorias
-Integración de JWT: Implementar JWT (JSON Web Tokens) para una autenticación y autorización seguras.
+Mock: el mock actualmente esta hecho con mockachino, se debe implementar 
 
-Implementación de Logs: Introducir mecanismos de registro adecuados en todos los servicios y controladores para facilitar la depuración y el monitoreo efectivos.
+Integración de JWT: Implementar JWT (JSON Web Tokens) para una autenticación y autorización seguras.
 
 Mejora de la Seguridad: Asegurar que la información sensible, como las contraseñas de los usuarios y las URL de las bases de datos, no estén expuestas ni se almacenen en texto plano.
 
 Integración de Micrometer y Grafana: Integrar Micrometer con Grafana para un monitoreo avanzado y la recopilación de métricas.
 
-Mejoras Opcionales
-Integración de Lombok: Considerar integrar Lombok para reducir el código repetitivo en el proyecto.
+Builders: implementar builders en vez de constructores
 
-MapStruct: Explorar la posibilidad de utilizar MapStruct para simplificar el mapeo entre DTOs (Data Transfer Objects) y entidades.
+
+Mejoras Opcionales
+
+Integración de Lombok: Considerar integrar Lombok para reducir el código repetitivo en el proyecto.
+MapStruct: Explorar la posibilidad de utilizar MapStruct para simplificar el mapeo.
 
 Documentación con Swagger
-Los detalles de los puntos finales de la API se encuentran en la documentación de Swagger. Mientras el proyecto está en progreso, puedes acceder a Swagger UI a través de: http://localhost:8080/swagger-ui/index.html
+La documentacion de swagger se encuentra en construccion, puede verlo con la configuracion basica en:  http://localhost:8080/swagger-ui/index.html
 
 Dependencias
 El proyecto actualmente depende de las siguientes librerías:
 
+java 17
 Gson
-Spring Framework
+Spring Framework 3
 PostgreSQL
+springdoc
+redisson
+bucket4j
+
+
 Arquitectura
 El proyecto sigue una clara separación de responsabilidades con los siguientes componentes:
 
-Controlador (Controller): Responsable de manejar las solicitudes entrantes y generar respuestas.
+Controlador (Controller): Responsable de manejar las solicitudes entrantes y mappear respuestas.
 
 Servicio (Service): Contiene la lógica del negocio y se encarga de procesar y validar datos.
 
-Repositorio (Repository): Maneja las interacciones con la base de datos, proporcionando una abstracción para el acceso a datos.
+Repositorio (Repository): Maneja las interacciones con las bases de datos, proporcionando una abstracción para el acceso a datos.
 
 Configuración (Configuration): Administra la configuración de las dependencias utilizadas en toda la aplicación.
 
+
+
+
 Configuración de Redis
-Ten en cuenta que Redis no está configurado actualmente para escalar. En consecuencia, el limitador de tasa puede no funcionar correctamente bajo cargas pesadas. Una solución potencial para implementar un mecanismo de almacenamiento en caché distribuida utilizando Redis Cluster se describe en este artículo: Distributed Caching in Java Microservices using Redis Cluster. Sin embargo, esta solución no se ha implementado en este proyecto debido a limitaciones de tiempo.
+Se encuentra con la configuracion basica, posiblemente como este no funcione para ejecutar varias instancias y que funcione correctamente el rate limiter.
 
-Ejecutar PostgreSQL localmente
+
+
+
+
+--Ejecutar el proyecto localmente:
+
+- Ejecutar JAVA localmente
+
+primero hay que tener instalado java 17 e intelij.
+
+clonar el repositorio https://github.com/papamasro/taxChallenge:
+
+git clone https://github.com/papamasro/taxChallenge.git
+
+abrir el proyecto y configurar las variables de entorno
+
+DATABASE_URL=jdbc:postgresql://localhost:5432/postgres;DATABASE_USERNAME=postgres;DATABASE_PASSWORD=mysecretpassword
+
+- Ejecutar Postgre localmente
 Para ejecutar una base de datos PostgreSQL de forma local, puedes utilizar el siguiente comando de Docker:
-
-bash
-Copy code
 docker run -p 5432:5432 --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres
-Ejecutar Redis localmente
+
+- Ejecutar Redis localmente
 Para ejecutar Redis en un contenedor de Docker de forma local, puedes utilizar el siguiente comando:
-
-bash
-Copy code
-docker run -d -p 6379:6379 --name myredis --network redisnet redis
-No dudes en contactarnos si tienes alguna pregunta o necesitas más ayuda.
-
-¡Gracias por tu interés en el proyecto!
-
-
-
-Handler errors are poorly implementated, must be improved
-
-
-health up http://localhost:8080/actuator/health
-
-
-
-improvements
-must: add JWT,add logger to all services and controller, hide users passwords and urls of dbs, micrometer and grafana
-
-optative: add lombok, mapstruct
-
-in progress swagger http://localhost:8080/swagger-ui/index.html
-
-
-dependencies
-
-gson
-spring
-postgresql
-
-
-
-controller responsabilicy mapper object
-
-service business logic
-
-repository access dbs
-
-config configuration of dependencies
-
-
-the redis is not configure for scaling, the rate limiter will not work property
-possible solution not implemented because no time
-https://www.nexsoftsys.com/articles/distributed-caching-in-java-microservices-using-redis-cluster.html
-
-run local postgres
-
-docker run -p 5432:5432 --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres
-
-run reddis in docker local
-
 docker run -d -p 6379:6379 --name myredis --network redisnet redis
 
+--Ejecutar el proyecto en docker:
+
+El servicio dockerizado se encuentra alojado en Docker-Hub. Bajarse la imagen mediante esta instrucción.
+
+docker pull papamas/app-latest:latest
+
+Correr el servicio mediante docker-compose, desde la carpeta raíz del proyecto.
+
+docker-compose up --build
+
+API
 
 
 
+Login
+Crear usuario
+
+método : POST
+url : {{url}}/createUser
+{
+"user": "123",
+"id": 1
+}
+
+login
+
+método : POST
+url : {{url}}/createUser
+{
+"user": "123",
+"id": 1
+}
 
 
-run docker container
 
-# Compilar la aplicación
-mvn clean package
+Ejecutar cálculo
+Ejecuta el cálculo pedido.
 
-# Construir las imágenes Docker
-docker-compose build --no-cache
+método : POST
+url : {{url}}/calculateTax
+header: userId:{{id}} es obligatorio este valor, y es el que va a tomar en cuenta el rate limiter para limitar el servicio, este solo servicio posee rate limiter
+{
+"first" : 15,
+"second" : 10
+}
 
-# Iniciar los contenedores
-docker-compose up --force-recreate
+
+Historial de llamadas
+Se obtienen los llamados entrantes  en la app. Incluye paginación.
+
+método : GET
+url : {{url}}/history?size=10&page=0
+Response:
+
+http status : 200
+{
+
+"pageNumber": 0,
+"pageSize": 10
+"totalPages": 1,
+"result": "[{\"id\":6,\"endpoint\":\"calculateTax\",\"timestamp\":\"2023-08-01 05:59:43.167\",\"statusCode\":200,\"response\":\"{\\\"date\\\":\\\"2023-08-01 05:59:43.166\\\",\\\"tax\\\":0.1,\\\"result\\\":4.4}\"},{\"id\":5,\"endpoint\":\"getExternalTax\",\"timestamp\":\"2023-08-01 05:59:43.166\",\"statusCode\":200,\"response\":\"{\\\"timestamp\\\":\\\"196108043215\\\",\\\"name\\\":\\\"IIGG\\\",\\\"tax\\\":0.1}\"},{\"id\":4,\"endpoint\":\"calculateTax\",\"timestamp\":\"2023-08-01 05:59:38.871\",\"statusCode\":200,\"response\":\"{\\\"date\\\":\\\"2023-08-01 05:59:38.87\\\",\\\"tax\\\":0.1,\\\"result\\\":1.1}\"},{\"id\":3,\"endpoint\":\"getExternalTax\",\"timestamp\":\"2023-08-01 05:59:38.87\",\"statusCode\":200,\"response\":\"{\\\"timestamp\\\":\\\"196108043215\\\",\\\"name\\\":\\\"IIGG\\\",\\\"tax\\\":0.1}\"},{\"id\":1,\"endpoint\":\"getExternalTax\",\"timestamp\":\"2023-08-01 05:59:37.409\",\"statusCode\":200,\"response\":\"{\\\"timestamp\\\":\\\"196108043215\\\",\\\"name\\\":\\\"IIGG\\\",\\\"tax\\\":0.1}\"},{\"id\":2,\"endpoint\":\"calculateTax\",\"timestamp\":\"2023-08-01 05:59:37.409\",\"statusCode\":200,\"response\":\"{\\\"date\\\":\\\"2023-08-01 05:59:37.394\\\",\\\"tax\\\":0.1,\\\"result\\\":1.1}\"}]"
+}
+
+}

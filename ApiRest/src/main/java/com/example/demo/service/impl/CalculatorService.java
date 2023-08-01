@@ -54,11 +54,10 @@ public class CalculatorService implements Calculator {
             return responseCharge.getTax();
         } catch (Exception ex) {
 
-            logger.error("error getting taxes from service");
+            logger.error("error getting taxes from service, trying to get from cache");
             CompletableFuture.runAsync(() -> {
-                loggingEventService.saveCallHistory("getExternalTax", 0, ex.getMessage()); //TODO RESOLVE STATUS CODE
+                loggingEventService.saveCallHistory("getExternalTax", 0, ex.getMessage()); //TODO RESOLVE STATUS CODE ERROR
             });
-            logger.info("trying to get taxes from cache");
             Optional<TaxesPercentCacheEntity> percentageFromCache = taxesCacheService.getLastTaxesFromCache(name); //TODO if fail redis, the service will not work because this, posible solution is adding completabler future with then
             if (percentageFromCache.isPresent()) {
                 logger.info("success getting taxes from cache");
