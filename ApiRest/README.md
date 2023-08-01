@@ -159,7 +159,7 @@ Respuesta:
 ~~~
 Historial de llamadas
 --
-Se obtienen los llamados entrantes en la app. Incluye paginación.
+Se obtienen los llamados salientes de la app. Incluye paginación.
 
 Método: GET
 
