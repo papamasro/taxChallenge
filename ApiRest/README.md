@@ -120,9 +120,13 @@ Correr el servicio mediante docker-compose, desde la carpeta raíz del proyecto.
 
 docker-compose up --build
 
+
+--Si tenes problemas con redis, seguramente tengas que cambiar una configuracion en application.properties
+spring.data.redis.host=redis cambiar por spring.data.redis.host=localhost o viceversa
+
+
+
 API
-
-
 
 Login
 Crear usuario
