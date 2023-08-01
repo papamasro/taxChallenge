@@ -43,15 +43,15 @@ Introducción
 
 Dependencias
 --
-El proyecto actualmente depende de las siguientes librerías:
+El proyecto actualmente tiene las siguientes dependencias:
 
-Java 17
-Gson
-Spring Framework 3
-PostgreSQL
-springdoc
-Redisson
-Bucket4j
+Java 17,
+Gson,
+Spring Framework 3,
+PostgreSQL,
+springdoc,
+Redisson,
+Bucket4j,
 Arquitectura
 
 
@@ -59,11 +59,13 @@ Arquitectura
 --
 El proyecto sigue una clara separación de responsabilidades con los siguientes componentes:
 
-Controlador (Controller): Responsable de manejar las solicitudes entrantes y mapear respuestas.
+Controlador (Controller): Responsable de manejar las solicitudes entrantes/salientes, mapear y resolver el rate limiter .
 
 Servicio (Service): Contiene la lógica del negocio y se encarga de procesar y validar datos.
 
 Repositorio (Repository): Maneja las interacciones con las bases de datos, proporcionando una abstracción para el acceso a datos.
+
+Modelo (Model) donde se encuentran todas las entidades del negocio/externas
 
 Configuración (Configuration): Administra la configuración de las dependencias utilizadas en toda la aplicación.
 
@@ -76,7 +78,7 @@ Ejecutar el proyecto localmente
 
 Ejecutar JAVA localmente:
 
-Primero, asegúrate de tener instalado Java 17 y IntelliJ.
+Primero, asegúrate de tener instalado Java 17, IntelliJ y Git.
 Clona el repositorio https://github.com/papamasro/taxChallenge.
 Abre el proyecto y configura las variables de entorno:
 ~~~
@@ -94,6 +96,8 @@ Para ejecutar Redis en un contenedor de Docker de forma local, puedes utilizar e
 ~~~
 docker run -d -p 6379:6379 --name myredis --network redisnet redis
 ~~~
+
+
 Ejecutar el proyecto en Docker
 --
 
