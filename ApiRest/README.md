@@ -1,15 +1,4 @@
-
-
-
-
-
-
-
-
-
-
-
-
+Handler errors are poorly implementated, must be improved
 
 
 health up http://localhost:8080/actuator/health

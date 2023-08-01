@@ -55,7 +55,7 @@ public class CalculatorService implements Calculator {
 
             logger.error("error getting taxes from service");
             CompletableFuture.runAsync(() -> {
-                loggingEventService.saveCallHistory("getExternalTax", 404, ex.getMessage()); //TODO RESOLVE STATUS CODE
+                loggingEventService.saveCallHistory("getExternalTax", 0, ex.getMessage()); //TODO RESOLVE STATUS CODE
             });
             logger.info("trying to get taxes from cache");
             Optional<TaxesPercentCache> percentageFromCache = taxesCacheService.getLastTaxesFromCache(name); //TODO if fail redis, the service will not work because this, posible solution is adding completabler future with then
@@ -70,7 +70,6 @@ public class CalculatorService implements Calculator {
     }
 
     public CalculateTaxResponse calculateTax(TaxValueRequest chargesRequest) {
-
         BigDecimal externalTaxes = getExternalTaxes(chargesRequest.getTaxesName());
         BigDecimal resultAddNumbers = chargesRequest.getFirstNumber().add(chargesRequest.getSecondNumber());
         BigDecimal charges = (resultAddNumbers.multiply(externalTaxes));
