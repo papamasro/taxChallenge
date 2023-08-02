@@ -124,7 +124,7 @@ URL: {{url}}/createUser
 Respuesta:
 ~~~
 {
-  "user": "123",
+  "user": "maurosm",
   "id": 1
 }
 ~~~
@@ -138,7 +138,7 @@ URL: {{url}}/login
 Respuesta:
 ~~~
 {
-  "user": "123",
+  "user": "maurosm",
   "id": 1
 }
 ~~~
