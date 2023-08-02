@@ -159,8 +159,9 @@ Cabecera: userId:{{userId}}
 Respuesta:
 ~~~
 {
-"first": 15,
-"second": 10
+"date": 15/05/23 12:13:41,
+"tax": 0.10,
+"tax": 3.3
 }
 ~~~
 Historial de llamadas
