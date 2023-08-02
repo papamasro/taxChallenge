@@ -51,8 +51,7 @@ Spring Framework 3,
 PostgreSQL,
 springdoc,
 Redisson,
-Bucket4j,
-Arquitectura
+Bucket4j
 
 
 Arquitectura
@@ -125,8 +124,8 @@ URL: {{url}}/createUser
 Respuesta:
 ~~~
 {
-"user": "123",
-"id": 1
+  "user": "123",
+  "id": 1
 }
 ~~~
 Login:
@@ -139,8 +138,8 @@ URL: {{url}}/login
 Respuesta:
 ~~~
 {
-"user": "123",
-"id": 1
+  "user": "123",
+  "id": 1
 }
 ~~~
 Ejecutar cálculo
@@ -157,8 +156,11 @@ Cabecera: userId:{{userId}}
 Respuesta:
 ~~~
 {
-"first": 15,
-"second": 10
+{
+  "date": 15/05/23 12:13:41,
+  "tax": 0.10,
+  "result": 3.3
+}
 }
 ~~~
 Historial de llamadas
@@ -172,10 +174,10 @@ URL: {{url}}/history?size=10&page=0
 Respuesta:
 ~~~
 {
-"pageNumber": 0,
-"pageSize": 10,
-"totalPages": 1,
-"result": "[{\"id\":6,\"endpoint\":\"calculateTax\",\"timestamp\":\"2023-08-01 05:59:43.167\",\"statusCode\":200,\"response\":\"{\\\"date\\\":\\\"2023-08-01 05:59:43.166\\\",\\\"tax\\\":0.1,\\\"result\\\":4.4}\"},{\"id\":5,\"endpoint\":\"getExternalTax\",\"timestamp\":\"2023-08-01 05:59:43.166\",\"statusCode\":200,\"response\":\"{\\\"timestamp\\\":\\\"196108043215\\\",\\\"name\\\":\\\"IIGG\\\",\\\"tax\\\":0.1}\"},{\"id\":4,\"endpoint\":\"calculateTax\",\"timestamp\":\"2023-08-01 05:59:38.871\",\"statusCode\":200,\"response\":\"{\\\"date\\\":\\\"2023-08-01 05:59:38.87\\\",\\\"tax\\\":0.1,\\\"result\\\":1.1}\"},{\"id\":3,\"endpoint\":\"getExternalTax\",\"timestamp\":\"2023-08-01 05:59:38.87\",\"statusCode\":200,\"response\":\"{\\\"timestamp\\\":\\\"196108043215\\\",\\\"name\\\":\\\"IIGG\\\",\\\"tax\\\":0.1}\"},{\"id\":1,\"endpoint\":\"getExternalTax\",\"timestamp\":\"2023-08-01 05:59:37.409\",\"statusCode\":200,\"response\":\"{\\\"timestamp\\\":\\\"196108043215\\\",\\\"name\\\":\\\"IIGG\\\",\\\"tax\\\":0.1}\"},{\"id\":2,\"endpoint\":\"calculateTax\",\"timestamp\":\"2023-08-01 05:59:37.409\",\"statusCode\":200,\"response\":\"{\\\"date\\\":\\\"2023-08-01 05:59:37.394\\\",\\\"tax\\\":0.1,\\\"result\\\":1.1}\"}]"
+  "pageNumber": 0,
+  "pageSize": 10,
+  "totalPages": 1,
+  "result": "[{\"id\":6,\"endpoint\":\"calculateTax\",\"timestamp\":\"2023-08-01 05:59:43.167\",\"statusCode\":200,\"response\":\"{\\\"date\\\":\\\"2023-08-01 05:59:43.166\\\",\\\"tax\\\":0.1,\\\"result\\\":4.4}\"},{\"id\":5,\"endpoint\":\"getExternalTax\",\"timestamp\":\"2023-08-01         05:59:43.166\",\"statusCode\":200,\"response\":\"{\\\"timestamp\\\":\\\"196108043215\\\",\\\"name\\\":\\\"IIGG\\\",\\\"tax\\\":0.1}\"},{\"id\":4,\"endpoint\":\"calculateTax\",\"timestamp\":\"2023-08-01 05:59:38.871\",\"statusCode\":200,\"response\":\"{\\\"date\\\":\\\"2023-08-01 05:59:38.87\\\",\\\"tax\\\":0.1,\\\"result\\\":1.1}\"},{\"id\":3,\"endpoint\":\"getExternalTax\",\"timestamp\":\"2023-08-01 05:59:38.87\",\"statusCode\":200,\"response\":\"{\\\"timestamp\\\":\\\"196108043215\\\",\\\"name\\\":\\\"IIGG\\\",\\\"tax\\\":0.1}\"},{\"id\":1,\"endpoint\":\"getExternalTax\",\"timestamp\":\"2023-08-01 05:59:37.409\",\"statusCode\":200,\"response\":\"{\\\"timestamp\\\":\\\"196108043215\\\",\\\"name\\\":\\\"IIGG\\\",\\\"tax\\\":0.1}\"},{\"id\":2,\"endpoint\":\"calculateTax\",\"timestamp\":\"2023-08-01 05:59:37.409\",\"statusCode\":200,\"response\":\"{\\\"date\\\":\\\"2023-08-01 05:59:37.394\\\",\\\"tax\\\":0.1,\\\"result\\\":1.1}\"}]"
 }
 ~~~
 
